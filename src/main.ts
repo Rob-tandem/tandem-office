@@ -81,7 +81,7 @@ async function enter(name: string, passcode: string, color: string, wantTranscri
   await net.join(passcode);
   joined = true;
   whenArtReady(() => {});
-  if (import.meta.env.DEV) (window as any).__office = { me, peers, mesh, net };
+  if (import.meta.env.DEV) (window as any).__office = { me, peers, mesh, net, step: (n?: number) => step(n ?? performance.now()) };
   await mesh.resume();
   $('#enter').classList.add('hidden'); $('#app').classList.remove('hidden');
   for (const m of await net.history()) if (visibleToMe(m)) chat.add(m);
@@ -157,7 +157,8 @@ async function enter(name: string, passcode: string, color: string, wantTranscri
   // ----- loop -----
   const canvas = $('#c') as HTMLCanvasElement, ctx = canvas.getContext('2d')!;
   let last = performance.now(), lastZone: string | null = null, lastStatus = me.status, lastPeopleRender = 0, lastBell = 0;
-  function frame(now: number) {
+  function frame(now: number) { step(now); requestAnimationFrame(frame); }
+  function step(now: number) {
     const dt = Math.min(0.05, (now - last) / 1000); last = now;
     let dx = 0, dy = 0;
     if (keys.has('arrowleft') || keys.has('a')) dx -= 1; if (keys.has('arrowright') || keys.has('d')) dx += 1;
@@ -193,7 +194,6 @@ async function enter(name: string, passcode: string, color: string, wantTranscri
     if (canvas.width !== cw * dpr || canvas.height !== chh * dpr) { canvas.width = cw * dpr; canvas.height = chh * dpr; canvas.style.width = cw + 'px'; canvas.style.height = chh + 'px'; }
     ctx.setTransform(dpr * scale, 0, 0, dpr * scale, 0, 0);
     draw(ctx, me, [...peers.values()], mesh.speaking(), now, bounce);
-    requestAnimationFrame(frame);
   }
   requestAnimationFrame(frame);
 }

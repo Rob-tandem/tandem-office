@@ -1,6 +1,6 @@
 # Tandem Office
 
-Audio-only virtual office for the Tandem team. Spec: `docs/SPEC.md`.
+Audio-only virtual office for the Tandem team: Storybook Land, an open-plan floor with themed desks, glass meeting rooms and a playground. Spec: `docs/SPEC.md`.
 
 ## Run locally
 ```

@@ -21,8 +21,8 @@ Mobile is not in v1.
 
 | Area | v1 behaviour |
 |---|---|
-| Entry | Name, home nook, colour, mood emoji for the day, a shared office passcode. Remembered on this browser. Your name shows on the signpost of your home nook. |
-| Map | **Storybook Land**, 44 x 26 tiles, drawn with the 28 real app illustrations. Eight story nooks as desks (Castle, Spaceship, Dinosaur Valley, Farmyard, Magic Tree, Desert Island, Safari, Big Machines). Three themed meeting rooms: the Rocket (all-hands), the Treehouse (2 to 4), the Cave (1:1). The Playground (playroom, with swings, a slide and a sandpit), the Picnic (kitchen), the Night Sky (silent focus zone), and the Front Cover (lobby, under the Tandem wordmark). |
+| Entry | Name, home nook, colour, mood emoji for the day, a shared office passcode. Remembered on this browser. Your name shows on the signpost under your home desk. |
+| Map | **Storybook Land**, one open-plan floor, 44 x 26 tiles, drawn flat and minimal in the story-card palette (no app illustrations; emoji as props). Eight themed desks in two rows, each a round rug with a desk, chair, monitor and a theme prop: Castle, Spaceship, Dinosaur Valley, Farmyard, Magic Tree, Desert Island, Safari, Big Machines. Three glass meeting rooms: the Rocket (all-hands, night-sky walls), the Treehouse (2 to 4), the Cave (1:1). The Playground (ball pit, slide, swings, sandpit, beanbags), the Picnic (gingham blanket and a table), the Night Sky (silent focus zone with beanbags and a telescope), and Reception (the Tandem wordmark on a sign, two sofas, the bell). |
 | Movement | Arrow keys or WASD. Walls and furniture block you. Smooth 8 Hz position sync. |
 | Presence | Side list of who is online, their status and zone. Avatar = coloured disc with initials and a name label. |
 | Audio | Mic on/off button. You hear people within 5 tiles. Full volume at 2 tiles or closer, fading to silent at 5. |
