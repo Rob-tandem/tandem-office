@@ -43,7 +43,7 @@ $('#enter-form').addEventListener('submit', async e => {
   localStorage.setItem('office.home', homeSel.value); localStorage.setItem('office.mood', mood);
   $('#enter-err').textContent = '';
   try { await enter(name, passcode, colour, tx, homeSel.value, mood); }
-  catch (err: any) { $('#enter-err').textContent = 'Could not connect: ' + (err?.message ?? err); }
+  catch (err: any) { $('#enter-err').textContent = err?.message === 'wrong passcode' ? 'That is not the office passcode. Ask the team.' : 'Could not connect: ' + (err?.message ?? err); }
 });
 
 // ---------- the office ----------
@@ -100,10 +100,10 @@ async function enter(name: string, passcode: string, color: string, wantTranscri
   sendChat(`${name} entered the office`, 'everyone', null, 'system');
   sounds.chime();
   // lights: first one in switches them on; otherwise take the state the others hold
-  setTimeout(() => {
+  net.synced.then(() => setTimeout(() => {
     if (peers.size === 0) { lightsOn = false; light = 0; setLights(true, name, true, true); }
     else { const other = [...peers.values()].find(p => p.lights !== undefined); lightsOn = other ? other.lights !== false : true; light = lightsOn ? 1 : 0; me.lights = lightsOn; }
-  }, 700);
+  }, 1500));
   function setLights(on: boolean, by: string, broadcast: boolean, firstIn = false) {
     if (on === lightsOn) return;
     lightsOn = on; me.lights = on; sounds.click(on);
@@ -128,7 +128,9 @@ async function enter(name: string, passcode: string, color: string, wantTranscri
     const el = kind !== 'system' ? chat.add({ ...m, created_at: new Date().toISOString() }) : null;
     net.chat(m).then(saved => { if (!saved) el?.classList.add('unsaved'); });
   }
+  let linkStates: Record<string, string> = {};
   function renderPeople() {
+    linkStates = Object.fromEntries(Object.entries(mesh.states()).map(([id, st]) => [id, st.split('/')[0]]));
     const ul = $('#people'); ul.innerHTML = '';
     $('#count').textContent = `(${peers.size + 1})`;
     for (const p of [me, ...peers.values()]) {
@@ -136,7 +138,9 @@ async function enter(name: string, passcode: string, color: string, wantTranscri
       const z = zoneAt(p.x, p.y);
       const dot = document.createElement('span'); dot.className = 'dot'; dot.style.background = COLORS.includes(p.color) ? p.color : '#999';
       const nm = document.createElement('span'); nm.textContent = `${p.mood ? p.mood + ' ' : ''}${p.name}${p === me ? ' (you)' : ''}${p.muted ? ' 🔇' : ''}${p.camera ? ' 📷' : ''}`;
-      const wh = document.createElement('span'); wh.className = 'where'; wh.textContent = p.status === 'away' ? 'away' : (z?.name ?? '');
+      const link = p === me ? '' : (linkStates[p.id] ?? '');
+      const wh = document.createElement('span'); wh.className = 'where' + (link && link !== 'connected' ? ' warn' : '');
+      wh.textContent = link && link !== 'connected' ? (link === 'connecting' || link === 'new' ? 'connecting…' : 'no audio link') : (p.status === 'away' ? 'away' : (z?.name ?? ''));
       li.append(dot, nm, wh);
       if (p !== me) li.onclick = () => { chat.setAudience('direct', p.name); chat.focus(); };
       ul.appendChild(li);
@@ -195,6 +199,8 @@ async function enter(name: string, passcode: string, color: string, wantTranscri
   const canvas = $('#c') as HTMLCanvasElement, ctx = canvas.getContext('2d')!;
   let last = performance.now(), lastZone: string | null = null, lastStatus = me.status, lastPeopleRender = 0, lastBell = 0;
   function frame(now: number) { step(now); requestAnimationFrame(frame); }
+  // When the tab is hidden the browser stops animation frames; keep the logic (volumes, status, presence) going on a timer.
+  setInterval(() => { if (document.hidden) step(performance.now()); }, 250);
   function step(now: number) {
     const dt = Math.min(0.05, (now - last) / 1000); last = now;
     let dx = 0, dy = 0;
@@ -225,7 +231,12 @@ async function enter(name: string, passcode: string, color: string, wantTranscri
     const away = now - lastInput > 5 * 60e3;
     me.status = away ? 'away' : z?.kind === 'room' ? 'meeting' : 'available';
     if (me.status !== lastStatus) { lastStatus = me.status; net.track(); }
-    if (now - lastPeopleRender > 1000) { lastPeopleRender = now; renderPeople(); mesh.tick(); }
+    if (now - lastPeopleRender > 1000) {
+      lastPeopleRender = now; renderPeople(); mesh.tick();
+      const near = hearers().map(p => p.name); const e = $('#earshot');
+      e.textContent = peers.size === 0 ? 'You are the only one here' : near.length ? `🔊 You can hear: ${near.join(', ')}` : '🚶 No one in earshot. Walk up to someone to talk.';
+      e.classList.toggle('none', !near.length);
+    }
     // draw
     const stage = canvas.parentElement!;
     const scale = Math.min(stage.clientWidth / (W * TILE), stage.clientHeight / (H * TILE), 1.25);

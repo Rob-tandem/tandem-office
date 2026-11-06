@@ -21,10 +21,10 @@ Mobile is not in v1.
 
 | Area | v1 behaviour |
 |---|---|
-| Entry | Name, home nook, colour, mood emoji for the day, a shared office passcode. Remembered on this browser. Your name shows on the signpost under your home desk. |
+| Entry | Name, home desk, colour, mood emoji for the day, and the office passcode (one office, one passcode, set in the code; Rob tells the team). Remembered on this browser. Your name shows on the signpost under your home desk. |
 | Map | **Storybook Land**, one open-plan floor, 44 x 26 tiles, drawn flat and minimal in the story-card palette (no app illustrations; emoji as props). Eight themed desks in two rows, each a round rug with a desk, chair, monitor and a theme prop: Castle, Spaceship, Dinosaur Valley, Farmyard, Magic Tree, Desert Island, Safari, Big Machines. Three glass meeting rooms: the Rocket (all-hands, night-sky walls), the Treehouse (2 to 4), the Cave (1:1). The Playground (ball pit, slide, swings, sandpit, beanbags), the Picnic (gingham blanket and a table), the Night Sky (silent focus zone with beanbags and a telescope), and Reception (the Tandem wordmark on a sign, two sofas, the bell). |
 | Movement | Arrow keys or WASD. Walls and furniture block you. Smooth 8 Hz position sync. |
-| Presence | Side list of who is online, their status and zone. Avatar = coloured disc with initials and a name label. |
+| Presence | Side list of who is online, their status and zone, and a red "connecting…" or "no audio link" when the peer connection to them is not up. The top bar says who you can hear right now. A dropped Realtime channel rejoins itself within 2 s, and the logic keeps running when the tab is in the background. Avatar = coloured disc with initials and a name label. |
 | Audio | Mic on/off button. You hear people within 5 tiles. Full volume at 2 tiles or closer, fading to silent at 5. |
 | Rooms | Inside a meeting room you hear only people in that room, at full volume. Nobody outside hears in. |
 | Night Sky | Everyone in it is muted both ways. Good for heads-down work with "I am here" presence. |
@@ -48,9 +48,8 @@ integration, guest links.
 - **Static web app.** Vite + TypeScript + canvas. No server code of our own.
 - **Supabase Realtime** (the existing cockpit project `epdrqklfolvvvusaxfpo`) does three jobs:
   presence (who is online), broadcast (positions, status), and WebRTC signalling.
-  One table, `office_messages`, holds text and transcript lines. The channel name is derived from the passcode, so without the passcode
-  you cannot find the room. This is a light gate, fine for v1. v2 adds Google sign-in limited to
-  playtandem.com.
+  One table, `office_messages`, holds text and transcript lines. There is one office (`office = 'main'`) behind one
+  passcode checked in the browser. This is a light gate, fine for v1. v2 adds Google sign-in limited to playtandem.com.
 - **WebRTC mesh for audio.** Every person has a direct peer connection to every other person.
   Opus audio, Google STUN only. This is fine for up to about 10 people. Some corporate networks
   block direct connections; the fix is a TURN server (Cloudflare has a free tier) behind a small
@@ -78,6 +77,16 @@ integration, guest links.
   safe to run again.
 - Team rule to agree: the office is a recorded space by default. Switch transcription off, or go
   to the Night Sky, for anything you do not want in the vault.
+
+## 6b2. What the first team test showed (Rob and Tibor, 6 Nov 12:50 to 13:00)
+
+- Both were in the same office; the "sometimes I see Tibor" problem was presence, not passcodes: a person was sometimes
+  judged "first in" while the other was there (fixed: wait for the real presence sync), and Tibor's connection
+  dropped and rejoined twice in four seconds (fixed: rejoin watchdog, 15 s heartbeat, logic runs in background tabs).
+- They were often more than 5 tiles apart (Reception vs Desks), which is silent by design and read as "audio broken".
+  Fixed with the "You can hear: …" / "No one in earshot" line in the top bar.
+- Still open: audio between two different home networks has not been proven. STUN only. If it fails on a network,
+  the fix is a TURN relay (Cloudflare, free tier, needs Rob's Cloudflare login and a small edge function).
 
 ## 6c. Known limits of v1 (reviewed by Codex 2026-11-06)
 

@@ -20,29 +20,32 @@ export interface NetEvents {
 
 const url = import.meta.env.VITE_SUPABASE_URL as string;
 const key = import.meta.env.VITE_SUPABASE_KEY as string;
-export const supabase = createClient(url, key, { realtime: { params: { eventsPerSecond: 40 } } });
+export const supabase = createClient(url, key, { realtime: { params: { eventsPerSecond: 40 }, heartbeatIntervalMs: 15000 } });
 
-async function channelName(passcode: string) {
-  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode('tandem-office:' + passcode.trim().toLowerCase()));
-  return 'office:' + Array.from(new Uint8Array(buf)).slice(0, 8).map(b => b.toString(16).padStart(2, '0')).join('');
-}
+export const PASSCODE = 'itsgoodtotalk';
+export const OFFICE = 'main';
+
 
 export class Net {
   private ch!: RealtimeChannel;
   private lastSent = 0;
-  office = '';
-  constructor(private me: Peer, private ev: NetEvents) {}
+  office = OFFICE;
+  /** Resolves after the first presence sync, so callers know who was already here. */
+  synced!: Promise<void>;
+  private firstSync!: () => void;
+  private watchdog = 0;
+  constructor(private me: Peer, private ev: NetEvents) { this.synced = new Promise(r => (this.firstSync = r)); }
 
   async join(passcode: string) {
-    const name = await channelName(passcode);
-    this.office = name;
-    this.ch = supabase.channel(name, { config: { presence: { key: this.me.id }, broadcast: { self: false } } });
+    if (passcode.trim().toLowerCase() !== PASSCODE) throw new Error('wrong passcode');
+    this.ch = supabase.channel('office:' + OFFICE, { config: { presence: { key: this.me.id }, broadcast: { self: false } } });
     this.ch
       .on('presence', { event: 'sync' }, () => {
         const state = this.ch.presenceState<Peer>();
         const peers: Peer[] = [];
-        for (const k of Object.keys(state)) { const p = state[k][0]; if (p && p.id !== this.me.id) peers.push({ ...p }); }
+        for (const k of Object.keys(state)) { const metas = state[k]; const p = metas[metas.length - 1]; if (p && p.id !== this.me.id) peers.push({ ...p }); }
         this.ev.onPresence(peers);
+        this.firstSync();
       })
       .on('broadcast', { event: 'pos' }, ({ payload }) => this.ev.onMove(payload.id, payload.x, payload.y))
       .on('broadcast', { event: 'rtc' }, ({ payload }) => { if (payload.to === this.me.id) this.ev.onSignal(payload.from, payload.to, payload.data); })
@@ -55,7 +58,15 @@ export class Net {
         else if (status === 'CHANNEL_ERROR' || status === 'TIMED_OUT') rej(err ?? new Error(status));
       });
     });
+    // Watchdog: a dropped channel rejoins and re-tracks on its own. Checked every 2 s and when the tab comes back.
+    const check = () => {
+      const st = this.ch.state;
+      if (st === 'closed' || st === 'errored') { console.warn('office channel', st, '- rejoining'); this.ch.subscribe(async s2 => { if (s2 === 'SUBSCRIBED') await this.track(); }); }
+    };
+    this.watchdog = window.setInterval(check, 2000);
+    document.addEventListener('visibilitychange', () => { if (!document.hidden) { check(); this.track().catch(() => {}); } });
   }
+  get state() { return this.ch?.state ?? 'none'; }
 
   /** Re-send presence (identity, status, mute, current tile). */
   async track() {
@@ -96,5 +107,5 @@ export class Net {
     return ((data ?? []) as ChatMessage[]).reverse();
   }
 
-  async leave() { try { await this.ch.untrack(); await supabase.removeChannel(this.ch); } catch {} }
+  async leave() { clearInterval(this.watchdog); try { await this.ch.untrack(); await supabase.removeChannel(this.ch); } catch {} }
 }
