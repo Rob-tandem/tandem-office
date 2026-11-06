@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tandem Office</title>
+  <link rel="icon" href="./icon-192.png">
+  <link rel="stylesheet" href="./src/style.css">
+</head>
+<body>
+  <div id="enter" class="enter">
+    <div class="card">
+      <img src="./tandem-logotype.png" alt="Tandem" class="logo">
+      <h1>The office</h1>
+      <p class="sub">Walk over to someone to talk. Rooms are private. The Quiet Garden is silent.</p>
+      <form id="enter-form">
+        <label>Your name<input id="name" required maxlength="32" autocomplete="name" placeholder="Rob"></label>
+        <label>Office passcode<input id="passcode" required type="password" placeholder="ask the team"></label>
+        <label>Colour<div id="colours" class="colours"></div></label>
+        <label class="check"><input id="transcribe" type="checkbox" checked> Transcribe what I say into the shared vault (default on)</label>
+        <button id="enter-btn" type="submit">Enter the office</button>
+        <p id="enter-err" class="err"></p>
+      </form>
+      <p class="fine">Audio only for now. Chrome or Edge for transcripts. Arrow keys or WASD to move.</p>
+    </div>
+  </div>
+
+  <div id="app" class="app hidden">
+    <header class="top">
+      <img src="./tandem-logotype-white.png" alt="Tandem" class="logo-sm">
+      <span class="title">Office</span>
+      <span id="zone" class="zone"></span>
+      <span class="spacer"></span>
+      <button id="mic" class="btn">🎙 Mic off</button>
+      <button id="tx" class="btn">● Transcript on</button>
+      <button id="leave" class="btn ghost">Leave</button>
+    </header>
+    <main class="body">
+      <aside class="people">
+        <h2>Who's in <span id="count"></span></h2>
+        <ul id="people"></ul>
+        <p class="fine">Click a name to message them directly.</p>
+      </aside>
+      <div class="stage"><canvas id="c"></canvas></div>
+      <aside class="chat" id="chat"></aside>
+    </main>
+  </div>
+  <script type="module" src="./src/main.ts"></script>
+</body>
+</html>
