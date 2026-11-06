@@ -9,7 +9,7 @@ import { fileURLToPath } from 'node:url';
 const TZ = 'Europe/London';
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const env = Object.fromEntries(readFileSync(join(root, '.env'), 'utf8').split('\n').filter(l => l.includes('=')).map(l => l.split('=').map(s => s.trim())));
-const OUT = process.env.OFFICE_LOG_DIR ?? '/Users/robhughesmbp/Library/CloudStorage/OneDrive-EarlyIdeasLimited/Team OS - Documents/TeamOS/co-owned/office/log';
+const OUT = process.env.OFFICE_LOG_DIR ?? join(process.env.HOME ?? '', 'Library/CloudStorage/OneDrive-EarlyIdeasLimited/Team OS - Documents/TeamOS/co-owned/office/log');
 const H = { apikey: env.VITE_SUPABASE_KEY, Authorization: `Bearer ${env.VITE_SUPABASE_KEY}` };
 
 /** London calendar day -> [startUTC, endUTC) */

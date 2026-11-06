@@ -10,7 +10,7 @@ export function draw(ctx: CanvasRenderingContext2D, me: Peer, peers: Peer[], spe
     ctx.fillStyle = z.floor;
     ctx.fillRect(z.x * TILE, z.y * TILE, z.w * TILE, z.h * TILE);
     ctx.fillStyle = 'rgba(41,46,77,0.45)';
-    ctx.font = '600 13px Wallop, sans-serif';
+    ctx.font = '700 13px 'Baloo 2', sans-serif';
     ctx.textAlign = 'left'; ctx.textBaseline = 'top';
     ctx.fillText(z.name.toUpperCase(), z.x * TILE + 8, z.y * TILE + 6);
   }
@@ -47,13 +47,13 @@ function drawAvatar(ctx: CanvasRenderingContext2D, p: Peer, isMe: boolean, talki
   ctx.beginPath(); ctx.arc(px, py, r, 0, Math.PI * 2); ctx.fill();
   ctx.strokeStyle = isMe ? INK : 'rgba(41,46,77,0.5)'; ctx.lineWidth = isMe ? 3 : 2;
   ctx.beginPath(); ctx.arc(px, py, r, 0, Math.PI * 2); ctx.stroke();
-  ctx.fillStyle = '#fff'; ctx.font = '600 12px Wallop, sans-serif';
+  ctx.fillStyle = '#fff'; ctx.font = '700 12px 'Baloo 2', sans-serif';
   ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
   ctx.fillText(initials(p.name), px, py + 1);
   if (p.muted) { ctx.fillStyle = '#B83A57'; ctx.beginPath(); ctx.arc(px + 10, py - 10, 5, 0, Math.PI * 2); ctx.fill(); }
   if (p.transcribing && !p.muted) { ctx.fillStyle = '#E5795E'; ctx.beginPath(); ctx.arc(px - 10, py - 10, 4, 0, Math.PI * 2); ctx.fill(); }
   // name label
-  ctx.font = '600 11px Wallop, sans-serif';
+  ctx.font = '700 11px 'Baloo 2', sans-serif';
   const label = p.name + (p.status === 'away' ? ' · away' : p.status === 'meeting' ? ' · in a meeting' : '');
   const tw = ctx.measureText(label).width + 10;
   ctx.fillStyle = 'rgba(41,46,77,0.85)';

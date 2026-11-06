@@ -1,8 +1,6 @@
-@font-face { font-family: Wallop; src: url('/fonts/Wallop-400.woff2') format('woff2'); font-weight: 400; }
-@font-face { font-family: Wallop; src: url('/fonts/Wallop-600.woff2') format('woff2'); font-weight: 600; }
 :root { --navy: #404A87; --ink: #292E4D; --cream: #FBF3E4; --coral: #E5795E; --teal: #63C6AC; --blue: #74B3E4; --yellow: #F6BB47; --lav: #9BA0D9; }
 * { box-sizing: border-box; }
-html, body { margin: 0; height: 100%; font-family: Wallop, 'Baloo 2', system-ui, sans-serif; color: var(--ink); background: var(--navy); }
+html, body { margin: 0; height: 100%; font-family: 'Baloo 2', Wallop, system-ui, sans-serif; color: var(--ink); background: var(--navy); }
 .hidden { display: none !important; }
 .enter { min-height: 100%; display: grid; place-items: center; padding: 24px; background: radial-gradient(circle at 30% 20%, #4f5aa0, var(--navy) 60%); }
 .card { background: var(--cream); border-radius: 20px; padding: 32px; width: min(440px, 100%); box-shadow: 0 20px 60px rgba(0,0,0,.3); }

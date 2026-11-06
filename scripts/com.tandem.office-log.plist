@@ -2,9 +2,9 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0"><dict>
   <key>Label</key><string>com.tandem.office-log</string>
-  <key>ProgramArguments</key><array><string>/usr/local/bin/node</string><string>/Users/robhughesmbp/dev/tandem-office/scripts/export-office-log.mjs</string></array>
+  <key>ProgramArguments</key><array><string>/usr/local/bin/node</string><string>/Users/YOUR-USER/dev/tandem-office/scripts/export-office-log.mjs</string></array>
   <key>StartInterval</key><integer>1800</integer>
   <key>RunAtLoad</key><true/>
-  <key>StandardOutPath</key><string>/Users/robhughesmbp/Library/Logs/tandem-office-log.log</string>
-  <key>StandardErrorPath</key><string>/Users/robhughesmbp/Library/Logs/tandem-office-log.log</string>
+  <key>StandardOutPath</key><string>/Users/YOUR-USER/Library/Logs/tandem-office-log.log</string>
+  <key>StandardErrorPath</key><string>/Users/YOUR-USER/Library/Logs/tandem-office-log.log</string>
 </dict></plist>
