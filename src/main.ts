@@ -55,6 +55,16 @@ async function enter(name: string, passcode: string, color: string, wantTranscri
   let lastInput = performance.now();
 
   const mesh = new AudioMesh(myId, (to, data) => net.signal(to, data));
+  const tilesEl = $('#tiles'); const tiles = new Map<string, HTMLElement>();
+  function tileFor(id: string, label: string, video: HTMLVideoElement, isMe = false) {
+    const t = document.createElement('div'); t.className = 'tile' + (isMe ? ' me' : ''); t.dataset.id = id;
+    const who = document.createElement('span'); who.className = 'who'; who.textContent = label;
+    t.append(video, who); tilesEl.appendChild(t); tiles.set(id, t); return t;
+  }
+  mesh.onVideo = (id, el) => {
+    tiles.get(id)?.remove(); tiles.delete(id);
+    if (el) tileFor(id, peers.get(id)?.name ?? '', el);
+  };
   const transcriber = new Transcriber(text => sendChat(text, 'nearby', null, 'said'));
   const chat = new ChatPanel($('#chat'), name, (body, audience, to) => sendChat(body, audience, to, 'text'));
 
@@ -63,7 +73,7 @@ async function enter(name: string, passcode: string, color: string, wantTranscri
       const ids = new Set(list.map(p => p.id));
       for (const p of list) {
         const cur = peers.get(p.id);
-        if (cur) Object.assign(cur, { name: p.name, color: p.color, mood: p.mood, home: p.home, status: p.status, muted: p.muted, transcribing: p.transcribing });
+        if (cur) Object.assign(cur, { name: p.name, color: p.color, mood: p.mood, home: p.home, status: p.status, muted: p.muted, transcribing: p.transcribing, camera: p.camera });
         else { peers.set(p.id, { ...p, tx: p.x, ty: p.y }); if (joined) sounds.chime(); }
       }
       for (const id of [...peers.keys()]) if (!ids.has(id)) peers.delete(id);
@@ -112,7 +122,7 @@ async function enter(name: string, passcode: string, color: string, wantTranscri
       const li = document.createElement('li');
       const z = zoneAt(p.x, p.y);
       const dot = document.createElement('span'); dot.className = 'dot'; dot.style.background = COLORS.includes(p.color) ? p.color : '#999';
-      const nm = document.createElement('span'); nm.textContent = `${p.mood ? p.mood + ' ' : ''}${p.name}${p === me ? ' (you)' : ''}${p.muted ? ' 🔇' : ''}`;
+      const nm = document.createElement('span'); nm.textContent = `${p.mood ? p.mood + ' ' : ''}${p.name}${p === me ? ' (you)' : ''}${p.muted ? ' 🔇' : ''}${p.camera ? ' 📷' : ''}`;
       const wh = document.createElement('span'); wh.className = 'where'; wh.textContent = p.status === 'away' ? 'away' : (z?.name ?? '');
       li.append(dot, nm, wh);
       if (p !== me) li.onclick = () => { chat.setAudience('direct', p.name); chat.focus(); };
@@ -121,7 +131,7 @@ async function enter(name: string, passcode: string, color: string, wantTranscri
   }
 
   // ----- controls -----
-  const micBtn = $('#mic'), txBtn = $('#tx');
+  const micBtn = $('#mic'), txBtn = $('#tx'), camBtn = $('#cam');
   async function setMic(on: boolean) {
     if (on && !(await mesh.enableMic())) { micBtn.textContent = '🎙 Mic blocked'; return; }
     me.muted = !on; mesh.setMuted(!on);
@@ -138,6 +148,15 @@ async function enter(name: string, passcode: string, color: string, wantTranscri
     txBtn.classList.toggle('rec', should);
   }
   micBtn.onclick = () => setMic(me.muted);
+  async function setCamera(on: boolean) {
+    if (on) {
+      if (!(await mesh.enableCamera())) { camBtn.textContent = '📷 Camera blocked'; return; }
+      const v = document.createElement('video'); v.autoplay = true; v.muted = true; v.playsInline = true; v.srcObject = mesh.cameraStream;
+      tileFor(me.id, 'You', v, true);
+    } else { mesh.disableCamera(); tiles.get(me.id)?.remove(); tiles.delete(me.id); }
+    me.camera = on; camBtn.textContent = on ? '📷 Camera on' : '📷 Camera off'; camBtn.classList.toggle('live', on); net.track();
+  }
+  camBtn.onclick = () => setCamera(!me.camera);
   txBtn.onclick = () => { wantTranscripts = !wantTranscripts; localStorage.setItem('office.transcribe', wantTranscripts ? 'on' : 'off'); applyTranscription(); net.track(); };
   $('#leave').onclick = async () => { sendChat(`${name} left the office`, 'everyone', null, 'system'); await net.leave(); mesh.close(); transcriber.stop(); location.reload(); };
   window.addEventListener('beforeunload', () => { net.leave(); });
@@ -169,10 +188,12 @@ async function enter(name: string, passcode: string, color: string, wantTranscri
       net.sendPos();
     }
     for (const p of peers.values()) { if (p.tx != null && p.ty != null) { p.x += (p.tx - p.x) * Math.min(1, dt * 12); p.y += (p.ty - p.y) * Math.min(1, dt * 12); } }
+    const speakingNow = mesh.speaking();
     // audio volumes, and a pop when someone comes into earshot
     for (const p of peers.values()) {
       const v = hearVolume(me.x, me.y, p.x, p.y); mesh.setVolume(p.id, v);
       if (v > 0 && !inEarshot.has(p.id)) { inEarshot.add(p.id); sounds.pop(); } else if (v === 0) inEarshot.delete(p.id);
+      const t = tiles.get(p.id); if (t) { t.style.opacity = v > 0 ? String(0.45 + 0.55 * v) : '0'; t.style.transform = v > 0 ? 'scale(1)' : 'scale(.9)'; t.classList.toggle('talking', speakingNow.has(p.id)); }
     }
     // fun tiles
     const tile = tileAt(me.x, me.y);
@@ -193,7 +214,7 @@ async function enter(name: string, passcode: string, color: string, wantTranscri
     const cw = Math.floor(W * TILE * scale), chh = Math.floor(H * TILE * scale);
     if (canvas.width !== cw * dpr || canvas.height !== chh * dpr) { canvas.width = cw * dpr; canvas.height = chh * dpr; canvas.style.width = cw + 'px'; canvas.style.height = chh + 'px'; }
     ctx.setTransform(dpr * scale, 0, 0, dpr * scale, 0, 0);
-    draw(ctx, me, [...peers.values()], mesh.speaking(), now, bounce);
+    draw(ctx, me, [...peers.values()], speakingNow, now, bounce);
   }
   requestAnimationFrame(frame);
 }

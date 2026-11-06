@@ -57,8 +57,8 @@ export class Net {
 
   /** Re-send presence (identity, status, mute, current tile). */
   async track() {
-    const { id, name, color, mood, home, x, y, status, muted, transcribing } = this.me;
-    await this.ch.track({ id, name, color, mood, home, x: Math.round(x * 10) / 10, y: Math.round(y * 10) / 10, status, muted, transcribing });
+    const { id, name, color, mood, home, x, y, status, muted, transcribing, camera } = this.me;
+    await this.ch.track({ id, name, color, mood, home, camera: !!camera, x: Math.round(x * 10) / 10, y: Math.round(y * 10) / 10, status, muted, transcribing });
   }
 
   /** Throttled to ~8 Hz. */

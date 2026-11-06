@@ -25,7 +25,7 @@
         <button id="enter-btn" type="submit">Enter the office</button>
         <p id="enter-err" class="err"></p>
       </form>
-      <p class="fine">Audio only for now. Chrome or Edge for transcripts. Arrow keys or WASD to move. Transcripts go to the shared vault.</p>
+      <p class="fine">Audio, and camera when you are near someone. Chrome or Edge for transcripts. Arrow keys or WASD to move. Transcripts go to the shared vault.</p>
     </div>
   </div>
 
@@ -36,6 +36,7 @@
       <span id="zone" class="zone"></span>
       <span class="spacer"></span>
       <button id="mic" class="btn">🎙 Mic off</button>
+      <button id="cam" class="btn">📷 Camera off</button>
       <button id="tx" class="btn">● Transcript on</button>
       <button id="leave" class="btn ghost">Leave</button>
     </header>
@@ -45,7 +46,7 @@
         <ul id="people"></ul>
         <p class="fine">Click a name to message them directly.</p>
       </aside>
-      <div class="stage"><canvas id="c"></canvas><div id="toast" class="toast hidden"></div></div>
+      <div class="stage"><div id="tiles" class="tiles"></div><canvas id="c"></canvas><div id="toast" class="toast hidden"></div></div>
       <aside class="chat" id="chat"></aside>
     </main>
   </div>
