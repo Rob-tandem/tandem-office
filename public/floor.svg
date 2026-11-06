@@ -1,0 +1,235 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1408" height="832" viewBox="0 0 1408 832">
+<!-- Storybook Land floor. Generated from the design artboard Main.dc.html (1408 x 832, 1 tile = 32 px).
+     Text (zone pills, desk signposts, "ring me") is drawn by src/render.ts with the Baloo 2 web font. -->
+<defs><filter id="shFloor" x="-10%" y="-10%" width="120%" height="125%"><feDropShadow dx="0" dy="10" stdDeviation="20" flood-color="#000" flood-opacity=".35"/></filter><filter id="shSign" x="-20%" y="-40%" width="140%" height="190%"><feDropShadow dx="0" dy="4" stdDeviation="7" flood-color="#292E4D" flood-opacity=".16"/></filter><filter id="shSm" x="-30%" y="-30%" width="160%" height="170%"><feDropShadow dx="0" dy="4" stdDeviation="7" flood-color="#292E4D" flood-opacity=".14"/></filter><pattern id="dots" patternUnits="userSpaceOnUse" x="16" y="16" width="32" height="32"><circle cx="16" cy="16" r="1.25" fill="rgba(41,46,77,.08)"/></pattern><pattern id="starsRA" patternUnits="userSpaceOnUse" x="999" y="43" width="53" height="47"><ellipse cx="26.5" cy="23.5" rx="1.2" ry="1.064" fill="#fff"/></pattern><pattern id="starsRB" patternUnits="userSpaceOnUse" x="1011" y="35" width="29" height="37"><ellipse cx="14.5" cy="18.5" rx="1.0" ry="1.276" fill="rgba(255,255,255,.5)"/></pattern><pattern id="starsNA" patternUnits="userSpaceOnUse" x="1001" y="525" width="61" height="43"><ellipse cx="30.5" cy="21.5" rx="1.2" ry="0.846" fill="#fff"/></pattern><pattern id="starsNB" patternUnits="userSpaceOnUse" x="1014" y="517" width="31" height="29"><ellipse cx="15.5" cy="14.5" rx="1.0" ry="0.935" fill="rgba(255,255,255,.5)"/></pattern><pattern id="gingham" patternUnits="userSpaceOnUse" x="580" y="100" width="32" height="32"><rect width="16" height="16" fill="#E89583"/><rect x="16" width="16" height="16" fill="#F3C3B7"/><rect y="16" width="16" height="16" fill="#F3C3B7"/></pattern>
+<symbol id="plant" viewBox="0 0 40 40">
+  <path d="M12 26h16l-2 11H14z" fill="#C8573D"/><rect x="11" y="24" width="18" height="4" rx="2" fill="#E5795E"/>
+  <ellipse cx="14" cy="18" rx="7" ry="9" fill="#63C6AC" transform="rotate(-25 14 18)"/>
+  <ellipse cx="26" cy="18" rx="7" ry="9" fill="#63C6AC" transform="rotate(25 26 18)"/>
+  <ellipse cx="20" cy="14" rx="7" ry="10" fill="#0D8F84"/>
+</symbol>
+<symbol id="desk" viewBox="0 0 64 32">
+  <rect x="1" y="4" width="62" height="26" rx="7" fill="#E9C9A0"/>
+  <rect x="1" y="2" width="62" height="24" rx="7" fill="#FFFFFF"/>
+  <rect x="31" y="7" width="24" height="15" rx="3" fill="#292E4D"/><rect x="33" y="9" width="20" height="11" rx="2" fill="#74B3E4"/>
+  <rect x="9" y="10" width="12" height="9" rx="2" fill="#F6BB47"/>
+  <circle cx="25" cy="19" r="3" fill="#E5795E"/>
+</symbol>
+<symbol id="chair" viewBox="0 0 24 24">
+  <rect x="3" y="2" width="18" height="7" rx="3.5" fill="currentColor" opacity=".75"/>
+  <rect x="2" y="7" width="20" height="15" rx="6" fill="currentColor"/>
+  <rect x="6" y="10" width="12" height="9" rx="4" fill="#fff" opacity=".35"/>
+</symbol>
+<symbol id="sofa" viewBox="0 0 96 32">
+  <rect x="2" y="2" width="92" height="12" rx="6" fill="#C8573D"/>
+  <rect x="2" y="8" width="92" height="22" rx="8" fill="#E5795E"/>
+  <rect x="8" y="14" width="24" height="10" rx="4" fill="#fff" opacity=".35"/><rect x="36" y="14" width="24" height="10" rx="4" fill="#fff" opacity=".35"/><rect x="64" y="14" width="24" height="10" rx="4" fill="#fff" opacity=".35"/>
+</symbol>
+<symbol id="bean" viewBox="0 0 32 32">
+  <ellipse cx="16" cy="18" rx="14" ry="12" fill="currentColor"/>
+  <ellipse cx="13" cy="13" rx="6" ry="4" fill="#fff" opacity=".35"/>
+</symbol>
+<symbol id="castle" viewBox="0 0 40 40">
+  <rect x="6" y="16" width="28" height="20" rx="3" fill="#9BA0D9"/>
+  <rect x="6" y="10" width="8" height="26" rx="2" fill="#7B80C4"/><rect x="26" y="10" width="8" height="26" rx="2" fill="#7B80C4"/>
+  <rect x="5" y="8" width="3" height="4" fill="#7B80C4"/><rect x="11" y="8" width="3" height="4" fill="#7B80C4"/><rect x="25" y="8" width="3" height="4" fill="#7B80C4"/><rect x="31" y="8" width="3" height="4" fill="#7B80C4"/>
+  <path d="M16 36v-9a4 4 0 0 1 8 0v9z" fill="#404A87"/>
+  <path d="M20 4l6 3-6 3z" fill="#E5795E"/><rect x="19" y="3" width="1.5" height="12" fill="#292E4D"/>
+</symbol>
+<symbol id="rocket" viewBox="0 0 40 40">
+  <path d="M20 3c7 5 9 14 7 24H13C11 17 13 8 20 3z" fill="#F4F6FB"/>
+  <path d="M20 3c7 5 9 14 7 24h-7z" fill="#D9DEEC"/>
+  <circle cx="20" cy="15" r="4.5" fill="#74B3E4"/><circle cx="20" cy="15" r="2.5" fill="#B9DBF5"/>
+  <path d="M13 20l-6 9h6zM27 20l6 9h-6z" fill="#E5795E"/>
+  <path d="M16 27h8l-4 10z" fill="#F6BB47"/>
+</symbol>
+<symbol id="dino" viewBox="0 0 40 40">
+  <path d="M6 30c0-9 6-15 15-15h5c5 0 8-4 9-7 2 2 2 6 0 9-2 3-5 4-5 7v6H6z" fill="#63C6AC"/>
+  <path d="M10 15l3 5M16 12l2 5M22 13l1 4" stroke="#3FA78F" stroke-width="3" stroke-linecap="round"/>
+  <rect x="9" y="30" width="5" height="6" rx="2" fill="#3FA78F"/><rect x="20" y="30" width="5" height="6" rx="2" fill="#3FA78F"/>
+  <circle cx="31" cy="11" r="1.5" fill="#292E4D"/>
+</symbol>
+<symbol id="chicken" viewBox="0 0 40 40">
+  <ellipse cx="18" cy="24" rx="12" ry="9" fill="#FFF4D6"/>
+  <circle cx="27" cy="16" r="6" fill="#FFF4D6"/>
+  <path d="M25 9l2-3 2 3 2-3 1 4h-8z" fill="#E5795E"/>
+  <path d="M32 16l5 1-5 2z" fill="#F6BB47"/><circle cx="28" cy="15" r="1.3" fill="#292E4D"/>
+  <path d="M14 33v4M20 33v4" stroke="#F6BB47" stroke-width="2.5" stroke-linecap="round"/>
+</symbol>
+<symbol id="tree" viewBox="0 0 40 40">
+  <rect x="17" y="24" width="6" height="12" rx="2" fill="#8A5A2B"/>
+  <circle cx="14" cy="18" r="9" fill="#63C6AC"/><circle cx="26" cy="18" r="9" fill="#63C6AC"/><circle cx="20" cy="11" r="9" fill="#0D8F84"/>
+  <circle cx="16" cy="14" r="2" fill="#F3A7C3"/><circle cx="25" cy="20" r="2" fill="#F3A7C3"/>
+</symbol>
+<symbol id="island" viewBox="0 0 40 40">
+  <ellipse cx="20" cy="31" rx="15" ry="6" fill="#F6DFA4"/>
+  <path d="M19 30c0-10 2-16 6-20" stroke="#8A5A2B" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <path d="M25 10c-6-2-10 0-12 4 5-1 9 0 12 2zM25 10c6-2 10 0 12 4-5-1-9 0-12 2zM25 10c-1-5 1-8 4-9-1 4 0 6 0 9z" fill="#0D8F84"/>
+  <circle cx="30" cy="28" r="2.5" fill="#E5795E"/>
+</symbol>
+<symbol id="lion" viewBox="0 0 40 40">
+  <circle cx="20" cy="20" r="15" fill="#C8951A"/>
+  <circle cx="20" cy="21" r="10" fill="#F6BB47"/>
+  <circle cx="16" cy="19" r="1.6" fill="#292E4D"/><circle cx="24" cy="19" r="1.6" fill="#292E4D"/>
+  <path d="M18 24h4l-2 2.5z" fill="#292E4D"/>
+  <circle cx="13" cy="12" r="3" fill="#F6BB47"/><circle cx="27" cy="12" r="3" fill="#F6BB47"/>
+</symbol>
+<symbol id="engine" viewBox="0 0 40 40">
+  <rect x="4" y="14" width="32" height="16" rx="3" fill="#E5795E"/>
+  <rect x="24" y="10" width="12" height="8" rx="2" fill="#C8573D"/><rect x="26" y="12" width="6" height="5" rx="1" fill="#B9DBF5"/>
+  <rect x="6" y="18" width="14" height="4" rx="2" fill="#F6BB47"/>
+  <circle cx="11" cy="31" r="4" fill="#292E4D"/><circle cx="29" cy="31" r="4" fill="#292E4D"/>
+  <circle cx="11" cy="31" r="1.5" fill="#9BA0D9"/><circle cx="29" cy="31" r="1.5" fill="#9BA0D9"/>
+  <path d="M8 8h6" stroke="#9BA0D9" stroke-width="3" stroke-linecap="round"/>
+</symbol>
+<symbol id="bell" viewBox="0 0 40 40">
+  <ellipse cx="20" cy="34" rx="11" ry="3" fill="#E9C9A0"/>
+  <path d="M10 28c0-8 2-10 4-14a6 6 0 0 1 12 0c2 4 4 6 4 14z" fill="#F6BB47"/>
+  <rect x="8" y="26" width="24" height="5" rx="2.5" fill="#C8951A"/>
+  <circle cx="20" cy="33" r="2.5" fill="#C8951A"/>
+</symbol>
+<symbol id="telescope" viewBox="0 0 40 40">
+  <path d="M8 28L28 10" stroke="#9BA0D9" stroke-width="7" stroke-linecap="round"/>
+  <path d="M26 12l6-5" stroke="#F6BB47" stroke-width="8" stroke-linecap="round"/>
+  <path d="M18 24l-4 12M18 24l6 12" stroke="#B8BCC9" stroke-width="3" stroke-linecap="round"/>
+</symbol>
+<symbol id="moon" viewBox="0 0 40 40">
+  <path d="M26 4a16 16 0 1 0 10 28A13 13 0 0 1 26 4z" fill="#F6BB47"/>
+</symbol>
+<symbol id="lantern" viewBox="0 0 40 40">
+  <rect x="14" y="8" width="12" height="20" rx="4" fill="#F6BB47"/><rect x="17" y="12" width="6" height="12" rx="2" fill="#FFF4D6"/>
+  <rect x="12" y="6" width="16" height="4" rx="2" fill="#292E4D"/><rect x="12" y="27" width="16" height="4" rx="2" fill="#292E4D"/>
+  <path d="M20 2v4" stroke="#292E4D" stroke-width="2"/>
+</symbol>
+<symbol id="rock" viewBox="0 0 40 40">
+  <path d="M6 30c0-8 6-16 16-16s14 6 14 16z" fill="#9BA0D9"/><path d="M14 30c0-5 3-9 8-9s8 3 8 9z" fill="#B5B9E3"/>
+</symbol>
+<symbol id="basket" viewBox="0 0 40 40">
+  <path d="M8 18h24l-3 14H11z" fill="#C8951A"/><path d="M8 18h24l-1 4H9z" fill="#A87A14"/>
+  <path d="M14 18c0-6 3-9 6-9s6 3 6 9" stroke="#A87A14" stroke-width="2.5" fill="none"/>
+  <circle cx="16" cy="16" r="3" fill="#E5795E"/><circle cx="24" cy="15" r="3" fill="#63C6AC"/>
+</symbol>
+<symbol id="cake" viewBox="0 0 40 40">
+  <rect x="8" y="18" width="24" height="14" rx="4" fill="#F3A7C3"/><rect x="8" y="18" width="24" height="5" rx="2.5" fill="#FFF4D6"/>
+  <rect x="19" y="8" width="2" height="10" fill="#74B3E4"/><circle cx="20" cy="7" r="2" fill="#F6BB47"/>
+</symbol>
+<symbol id="teddy" viewBox="0 0 40 40">
+  <circle cx="12" cy="12" r="5" fill="#C8951A"/><circle cx="28" cy="12" r="5" fill="#C8951A"/>
+  <circle cx="20" cy="17" r="10" fill="#E0A73A"/><ellipse cx="20" cy="30" rx="11" ry="8" fill="#E0A73A"/>
+  <circle cx="16" cy="16" r="1.5" fill="#292E4D"/><circle cx="24" cy="16" r="1.5" fill="#292E4D"/><ellipse cx="20" cy="21" rx="4" ry="3" fill="#F6DFA4"/>
+</symbol>
+</defs>
+<rect width="1408" height="832" fill="#2F3766"/>
+<rect x="16" y="16" width="1376" height="800" rx="28" fill="#FBF3E4" filter="url(#shFloor)"/>
+<rect x="16" y="16" width="1376" height="800" rx="28" fill="url(#dots)"/>
+<rect x="42" y="42" width="396" height="268" rx="40" fill="#D5F1EC"/><rect x="44" y="44" width="392" height="264" rx="38" fill="none" stroke="#BCE7DB" stroke-width="4"/>
+<rect x="490" y="42" width="428" height="268" rx="40" fill="#FBF0CC"/><rect x="492" y="44" width="424" height="264" rx="38" fill="none" stroke="#F3E2A8" stroke-width="4"/>
+<rect x="992" y="32" width="384" height="256" rx="14" fill="#2B2F6B"/><rect x="992" y="32" width="384" height="256" rx="14" fill="url(#starsRB)"/><rect x="992" y="32" width="384" height="256" rx="14" fill="url(#starsRA)"/>
+<rect x="992" y="320" width="192" height="160" rx="14" fill="#E3F2DC"/>
+<rect x="1216" y="320" width="160" height="160" rx="14" fill="#DCD9E6"/>
+<rect x="992" y="512" width="384" height="288" rx="14" fill="#1B1E3B"/><rect x="992" y="512" width="384" height="288" rx="14" fill="url(#starsNB)"/><rect x="992" y="512" width="384" height="288" rx="14" fill="url(#starsNA)"/>
+<rect x="974" y="16" width="4" height="112" rx="2" fill="rgba(64,74,135,.28)"/><rect x="974.5" y="16.5" width="3" height="111" rx="1.5" fill="none" stroke="rgba(255,255,255,.55)" stroke-width="1"/>
+<rect x="974" y="192" width="4" height="320" rx="2" fill="rgba(64,74,135,.28)"/><rect x="974.5" y="192.5" width="3" height="319" rx="1.5" fill="none" stroke="rgba(255,255,255,.55)" stroke-width="1"/>
+<rect x="974" y="512" width="4" height="96" rx="2" fill="rgba(64,74,135,.28)"/><rect x="974.5" y="512.5" width="3" height="95" rx="1.5" fill="none" stroke="rgba(255,255,255,.55)" stroke-width="1"/>
+<rect x="974" y="672" width="4" height="144" rx="2" fill="rgba(64,74,135,.28)"/><rect x="974.5" y="672.5" width="3" height="143" rx="1.5" fill="none" stroke="rgba(255,255,255,.55)" stroke-width="1"/>
+<rect x="960" y="302" width="432" height="4" rx="2" fill="rgba(64,74,135,.28)"/><rect x="960.5" y="302.5" width="431" height="3" rx="1.5" fill="none" stroke="rgba(255,255,255,.55)" stroke-width="1"/>
+<rect x="960" y="494" width="288" height="4" rx="2" fill="rgba(64,74,135,.28)"/><rect x="960.5" y="494.5" width="287" height="3" rx="1.5" fill="none" stroke="rgba(255,255,255,.55)" stroke-width="1"/>
+<rect x="1312" y="494" width="80" height="4" rx="2" fill="rgba(64,74,135,.28)"/><rect x="1312.5" y="494.5" width="79" height="3" rx="1.5" fill="none" stroke="rgba(255,255,255,.55)" stroke-width="1"/>
+<rect x="1198" y="288" width="4" height="224" rx="2" fill="rgba(64,74,135,.28)"/><rect x="1198.5" y="288.5" width="3" height="223" rx="1.5" fill="none" stroke="rgba(255,255,255,.55)" stroke-width="1"/>
+<g transform="translate(60 60)"><path d="M6 38L18 6h72l12 32" stroke="#404A87" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M34 8v22M46 8v22M62 8v22M74 8v22" stroke="#8A5A2B" stroke-width="2"/><rect x="29" y="29" width="22" height="8" rx="4" fill="#E5795E"/><rect x="57" y="29" width="22" height="8" rx="4" fill="#E5795E"/></g>
+<g transform="translate(172 36)"><circle cx="36" cy="36" r="34" fill="#F6DFA4"/><circle cx="36" cy="36" r="27" fill="#FBEBC2"/><circle cx="24" cy="30" r="2" fill="#E0B95A"/><circle cx="46" cy="26" r="1.6" fill="#E0B95A"/><circle cx="40" cy="46" r="2" fill="#E0B95A"/><circle cx="26" cy="44" r="1.4" fill="#E0B95A"/><rect x="42" y="36" width="12" height="12" rx="2" fill="#74B3E4"/><rect x="43" y="33" width="10" height="3" rx="1.5" fill="#4F91C9"/></g>
+<g transform="translate(284 58)"><path d="M10 66L84 14" stroke="#F6BB47" stroke-width="24" stroke-linecap="round"/><path d="M7 55L81 3M13 77L87 25" stroke="#E5795E" stroke-width="4" stroke-linecap="round"/><rect x="78" y="2" width="26" height="36" rx="7" fill="#404A87"/><path d="M83 10h16M83 19h16M83 28h16" stroke="#fff" stroke-width="2" stroke-linecap="round"/></g>
+<g transform="translate(100 164)"><rect x="2" y="4" width="116" height="82" rx="22" fill="#E9C9A0"/><rect x="2" y="2" width="116" height="80" rx="22" fill="#fff"/><circle cx="22" cy="24" r="8" fill="#E5795E"/><circle cx="40" cy="20" r="8" fill="#63C6AC"/><circle cx="58" cy="26" r="8" fill="#74B3E4"/><circle cx="76" cy="20" r="8" fill="#F3A7C3"/><circle cx="96" cy="26" r="8" fill="#F6BB47"/><circle cx="30" cy="42" r="8" fill="#9BA0D9"/><circle cx="48" cy="44" r="8" fill="#F6BB47"/><circle cx="66" cy="42" r="8" fill="#E5795E"/><circle cx="86" cy="44" r="8" fill="#63C6AC"/><circle cx="22" cy="60" r="8" fill="#74B3E4"/><circle cx="40" cy="62" r="8" fill="#F3A7C3"/><circle cx="58" cy="60" r="8" fill="#9BA0D9"/><circle cx="78" cy="62" r="8" fill="#E5795E"/><circle cx="96" cy="60" r="8" fill="#63C6AC"/></g>
+<use href="#bean" x="288" y="192" width="32" height="32" color="#F6BB47"/>
+<use href="#bean" x="352" y="160" width="32" height="32" color="#E5795E"/>
+<use href="#teddy" x="54" y="236" width="44" height="44"/>
+<use href="#plant" x="396" y="240" width="40" height="40"/>
+<rect x="580" y="100" width="120" height="120" rx="10" fill="#fff" filter="url(#shSm)"/><rect x="580" y="100" width="120" height="120" rx="10" fill="url(#gingham)"/>
+<use href="#basket" x="600" y="118" width="40" height="40"/>
+<use href="#cake" x="648" y="150" width="36" height="36"/>
+<g transform="translate(760 88)"><circle cx="40" cy="42" r="30" fill="#E9C9A0"/><circle cx="40" cy="40" r="30" fill="#fff"/><circle cx="40" cy="40" r="22" fill="#63C6AC"/><circle cx="40" cy="6" r="7" fill="#404A87"/><circle cx="40" cy="74" r="7" fill="#404A87"/><circle cx="6" cy="40" r="7" fill="#404A87"/><circle cx="74" cy="40" r="7" fill="#404A87"/><circle cx="40" cy="40" r="6" fill="#F6BB47"/></g>
+<use href="#plant" x="860" y="56" width="40" height="40"/>
+<use href="#plant" x="500" y="240" width="40" height="40"/>
+<use href="#plant" x="868" y="236" width="40" height="40"/>
+<g transform="translate(1072 84)"><rect x="20" y="22" width="152" height="80" rx="40" fill="#1E2257"/><rect x="20" y="18" width="152" height="80" rx="40" fill="#fff"/><rect x="34" y="30" width="124" height="56" rx="28" fill="#63C6AC"/><circle cx="60" cy="8" r="8" fill="#9BA0D9"/><circle cx="96" cy="6" r="8" fill="#9BA0D9"/><circle cx="132" cy="8" r="8" fill="#9BA0D9"/><circle cx="60" cy="110" r="8" fill="#9BA0D9"/><circle cx="96" cy="112" r="8" fill="#9BA0D9"/><circle cx="132" cy="110" r="8" fill="#9BA0D9"/><circle cx="10" cy="58" r="8" fill="#9BA0D9"/><circle cx="182" cy="58" r="8" fill="#9BA0D9"/></g>
+<use href="#rocket" x="1296" y="48" width="56" height="56"/>
+<g transform="translate(1010 218)"><circle cx="22" cy="22" r="12" fill="#F3A7C3"/><circle cx="18" cy="19" r="4" fill="#F7C4D7"/><ellipse cx="22" cy="24" rx="20" ry="5" fill="none" stroke="#9BA0D9" stroke-width="3" transform="rotate(-15 22 24)"/></g>
+<g transform="translate(1056 376)"><rect x="4" y="12" width="56" height="30" rx="15" fill="#E9C9A0"/><rect x="4" y="10" width="56" height="30" rx="15" fill="#fff"/><rect x="14" y="18" width="36" height="14" rx="7" fill="#63C6AC"/><circle cx="32" cy="4" r="6" fill="#404A87"/><circle cx="32" cy="45" r="6" fill="#404A87"/></g>
+<use href="#tree" x="1130" y="418" width="48" height="48"/>
+<use href="#plant" x="1000" y="430" width="40" height="40"/>
+<g transform="translate(1280 380)"><circle cx="20" cy="22" r="16" fill="#E9C9A0"/><circle cx="20" cy="20" r="16" fill="#fff"/><circle cx="20" cy="20" r="10" fill="#63C6AC"/><circle cx="4" cy="20" r="5" fill="#404A87"/><circle cx="36" cy="20" r="5" fill="#404A87"/></g>
+<use href="#rock" x="1326" y="426" width="44" height="44"/>
+<use href="#lantern" x="1226" y="428" width="36" height="36"/>
+<use href="#moon" x="1296" y="528" width="56" height="56"/>
+<use href="#bean" x="1056" y="576" width="32" height="32" color="#9BA0D9"/>
+<use href="#bean" x="1152" y="640" width="32" height="32" color="#74B3E4"/>
+<use href="#bean" x="1248" y="576" width="32" height="32" color="#F3A7C3"/>
+<use href="#bean" x="1120" y="704" width="32" height="32" color="#63C6AC"/>
+<use href="#telescope" x="1008" y="720" width="56" height="56"/>
+<circle cx="96" cy="419" r="61" fill="rgba(155,160,217,0.33)"/><circle cx="96" cy="419" r="54" fill="none" stroke="rgba(155,160,217,0.22)" stroke-width="14"/>
+<use href="#desk" x="64" y="384" width="64" height="32"/>
+<use href="#chair" x="68" y="422" width="24" height="24" color="#9BA0D9"/>
+<use href="#castle" x="124" y="372" width="40" height="40"/>
+<circle cx="320" cy="419" r="61" fill="rgba(116,179,228,0.33)"/><circle cx="320" cy="419" r="54" fill="none" stroke="rgba(116,179,228,0.22)" stroke-width="14"/>
+<use href="#desk" x="288" y="384" width="64" height="32"/>
+<use href="#chair" x="292" y="422" width="24" height="24" color="#74B3E4"/>
+<use href="#rocket" x="348" y="372" width="40" height="40"/>
+<circle cx="544" cy="419" r="61" fill="rgba(99,198,172,0.33)"/><circle cx="544" cy="419" r="54" fill="none" stroke="rgba(99,198,172,0.22)" stroke-width="14"/>
+<use href="#desk" x="512" y="384" width="64" height="32"/>
+<use href="#chair" x="516" y="422" width="24" height="24" color="#63C6AC"/>
+<use href="#dino" x="572" y="372" width="40" height="40"/>
+<circle cx="768" cy="419" r="61" fill="rgba(246,187,71,0.33)"/><circle cx="768" cy="419" r="54" fill="none" stroke="rgba(246,187,71,0.22)" stroke-width="14"/>
+<use href="#desk" x="736" y="384" width="64" height="32"/>
+<use href="#chair" x="740" y="422" width="24" height="24" color="#F6BB47"/>
+<use href="#chicken" x="796" y="372" width="40" height="40"/>
+<circle cx="96" cy="579" r="61" fill="rgba(139,211,166,0.33)"/><circle cx="96" cy="579" r="54" fill="none" stroke="rgba(139,211,166,0.22)" stroke-width="14"/>
+<use href="#desk" x="64" y="544" width="64" height="32"/>
+<use href="#chair" x="68" y="582" width="24" height="24" color="#8BD3A6"/>
+<use href="#tree" x="124" y="532" width="40" height="40"/>
+<circle cx="320" cy="579" r="61" fill="rgba(243,167,195,0.33)"/><circle cx="320" cy="579" r="54" fill="none" stroke="rgba(243,167,195,0.22)" stroke-width="14"/>
+<use href="#desk" x="288" y="544" width="64" height="32"/>
+<use href="#chair" x="292" y="582" width="24" height="24" color="#F3A7C3"/>
+<use href="#island" x="348" y="532" width="40" height="40"/>
+<circle cx="544" cy="579" r="61" fill="rgba(229,121,94,0.33)"/><circle cx="544" cy="579" r="54" fill="none" stroke="rgba(229,121,94,0.22)" stroke-width="14"/>
+<use href="#desk" x="512" y="544" width="64" height="32"/>
+<use href="#chair" x="516" y="582" width="24" height="24" color="#E5795E"/>
+<use href="#lion" x="572" y="532" width="40" height="40"/>
+<circle cx="768" cy="579" r="61" fill="rgba(184,58,87,0.3)"/><circle cx="768" cy="579" r="54" fill="none" stroke="rgba(184,58,87,0.2)" stroke-width="14"/>
+<use href="#desk" x="736" y="544" width="64" height="32"/>
+<use href="#chair" x="740" y="582" width="24" height="24" color="#B83A57"/>
+<use href="#engine" x="796" y="532" width="40" height="40"/>
+<use href="#plant" x="188" y="420" width="40" height="40"/>
+<use href="#plant" x="636" y="580" width="40" height="40"/>
+<g transform="translate(408 580)"><rect x="4" y="6" width="40" height="38" rx="5" fill="#E9C9A0"/><rect x="9" y="12" width="7" height="12" rx="1.5" fill="#E5795E"/><rect x="18" y="12" width="7" height="12" rx="1.5" fill="#63C6AC"/><rect x="27" y="12" width="7" height="12" rx="1.5" fill="#74B3E4"/><rect x="9" y="28" width="7" height="12" rx="1.5" fill="#F6BB47"/><rect x="18" y="28" width="7" height="12" rx="1.5" fill="#9BA0D9"/><rect x="27" y="28" width="7" height="12" rx="1.5" fill="#F3A7C3"/></g>
+<g transform="translate(844 424)"><rect x="2" y="12" width="40" height="20" rx="5" fill="#B8BCC9"/><rect x="10" y="4" width="24" height="12" rx="2" fill="#fff"/><rect x="8" y="22" width="28" height="6" rx="2" fill="#404A87"/></g>
+<rect x="318" y="651" width="292" height="76" rx="14" fill="#fff" filter="url(#shSign)"/>
+<svg x="336" y="664" width="256" height="50" viewBox="0 0 118 23" fill="none">
+<g>
+<g>
+<g>
+<g>
+<g>
+<g>
+<g>
+<path d="M116.636 4.06509H113.714C113.475 4.06509 113.262 4.17804 113.129 4.35248L108.601 9.79623L104.073 4.35248C103.939 4.17804 103.727 4.06509 103.488 4.06509H100.566C100.163 4.06509 99.8354 4.38598 99.8354 4.78152V20.5421C99.8354 20.9378 100.163 21.2585 100.566 21.2585H103.488C103.891 21.2585 104.218 20.9378 104.218 20.5421V10.6052L108.601 15.5274L112.983 10.6052V20.5421C112.983 20.9378 113.31 21.2585 113.714 21.2585H116.636C117.039 21.2585 117.366 20.9378 117.366 20.5421V4.78152C117.366 4.38598 117.039 4.06509 116.636 4.06509Z" fill="#60B8F5"/>
+<path d="M97.1786 2.78275L87.1913 0.631575L84.3367 0.0168505C83.9427 -0.0680959 83.5531 0.176454 83.4667 0.5629L80.0195 15.9566C79.9329 16.3431 80.1823 16.7252 80.5763 16.8099L81.9985 17.1162C81.9999 17.1164 82.0014 17.1169 82.0031 17.1174L93.4181 19.5761C93.8121 19.661 94.2015 19.4165 94.2882 19.03L94.9149 16.2313C95.0015 15.8449 94.7522 15.4627 94.3582 15.3778L85.0836 13.3802L85.634 10.9225L92.8445 12.476C93.2385 12.5607 93.6282 12.3164 93.7148 11.9299L94.1847 9.83067C94.2713 9.44422 94.0222 9.06232 93.6282 8.97738L86.4174 7.42394L86.9639 4.9837L96.2385 6.98126C96.6325 7.06621 97.0219 6.82165 97.1085 6.43521L97.7353 3.63652C97.8219 3.25008 97.5726 2.86746 97.1786 2.78275Z" fill="#FE98C4"/>
+<path d="M77.5798 11.7938C77.0486 7.09518 72.9259 3.68392 68.3559 4.14766C68.3498 4.14814 68.3439 4.14862 68.3378 4.14909L64.2751 4.59082C64.2751 4.59082 64.2732 4.59082 64.2722 4.59082L61.3683 4.90643C60.9672 4.94998 60.6784 5.30413 60.7228 5.69751L62.4931 21.3621C62.5375 21.7552 62.8986 22.0388 63.2994 21.9952L65.09 21.8005L70.2143 21.2434C70.2189 21.2429 70.2236 21.2425 70.2282 21.242C70.2328 21.2415 70.2375 21.2408 70.2421 21.2403L70.2692 21.2374C70.2723 21.2372 70.2755 21.2365 70.2789 21.2362C74.846 20.7112 78.1112 16.4956 77.5798 11.7938ZM69.2654 17.0222L68.9178 17.06C68.9161 17.06 68.9151 17.06 68.9151 17.06L66.9106 17.278L66.4468 17.3285L65.4811 8.78406L67.9494 8.51582C67.9494 8.51582 67.9499 8.51582 67.9506 8.51582L68.3022 8.47753C69.4135 8.39617 72.7944 8.46724 73.2238 12.2671C73.6537 16.0698 70.3658 16.8638 69.2654 17.0222Z" fill="#60DACA"/>
+<path d="M40.5813 1.34061C40.6143 0.946262 40.9668 0.652897 41.3689 0.685201L44.281 0.919462C44.5194 0.938605 44.7217 1.06806 44.84 1.25255L52.8581 12.28L53.6852 2.39514C53.7181 2.0008 54.0707 1.70743 54.4728 1.73974L57.3849 1.974C57.787 2.0063 58.0861 2.3523 58.0532 2.74664L56.7391 18.4545C56.7061 18.8489 56.3534 19.1422 55.9513 19.1099L53.0394 18.8757C52.773 18.8541 52.5519 18.6953 52.4424 18.4756L44.4633 7.50198L43.6352 17.4C43.6023 17.7943 43.2495 18.0879 42.8474 18.0554L39.9355 17.8211C39.5335 17.7888 39.2343 17.4428 39.2673 17.0485L40.5813 1.34061Z" fill="#949DD5"/>
+<path d="M37.3633 20.2346L28.5998 4.49985C28.3229 4.00262 27.5946 4.00262 27.3177 4.49985L18.5542 20.2346C18.2883 20.7119 18.6406 21.2944 19.1954 21.2944H22.4713C22.7919 21.2944 23.0869 21.1228 23.2406 20.8469L24.2082 19.1094H31.7093L32.6769 20.8469C32.8306 21.1228 33.1256 21.2944 33.4462 21.2944H36.7223C37.2769 21.2944 37.6292 20.7119 37.3633 20.2346ZM26.2032 15.5273L27.6383 12.9507C27.7766 12.7021 28.1409 12.7021 28.2792 12.9507L29.7143 15.5273H26.2032Z" fill="#E87C66"/>
+<path d="M0.907664 4.46136C0.51803 4.56378 0.286738 4.95644 0.391161 5.33858L1.14725 8.10664C1.25168 8.48878 1.65229 8.71562 2.04192 8.6132L7.68637 7.12988L10.9 18.8934C11.0044 19.2755 11.4051 19.5024 11.7947 19.3999L14.617 18.6584C15.0067 18.556 15.238 18.1631 15.1335 17.7809L11.9196 6.01744L17.5641 4.53411C17.9537 4.43169 18.185 4.03877 18.0806 3.65664L17.3242 0.888823C17.2198 0.506684 16.8194 0.279842 16.4296 0.382256L0.907664 4.46136Z" fill="#FDBC46"/>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</svg>
+<use href="#sofa" x="128" y="736" width="96" height="32"/>
+<use href="#sofa" x="704" y="736" width="96" height="32"/>
+<circle cx="464" cy="752" r="18" fill="rgba(246,187,71,.35)"/>
+<use href="#bell" x="446" y="732" width="36" height="36"/>
+<use href="#plant" x="40" y="650" width="44" height="44"/>
+<use href="#plant" x="866" y="650" width="44" height="44"/>
+<use href="#plant" x="932" y="20" width="36" height="36"/>
+</svg>
