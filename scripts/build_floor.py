@@ -35,6 +35,9 @@ P.append(rug(992, 512, 384, 288, '#1B1E3B', r=14, pat=('starsNB', 'starsNA')))
 for (x, y, w, h) in [(974,16,4,112),(974,192,4,320),(974,512,4,96),(974,672,4,144),(960,302,432,4),(960,494,288,4),(1312,494,80,4),(1198,288,4,224)]:
     P.append(f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="2" fill="rgba(64,74,135,.28)"/>'
              f'<rect x="{x+.5}" y="{y+.5}" width="{w-1}" height="{h-1}" rx="1.5" fill="none" stroke="rgba(255,255,255,.55)" stroke-width="1"/>')
+# doors: half-open leaf + swing arc in every wall gap (hinge at the symbol's 4,4)
+P += [use('door',972,124,72,72), use('door',972,380,72,72), use('door',972,604,72,72)]
+P.append('<g transform="rotate(-90 1248 496)">' + use('door',1244,492,72,72) + '</g>')
 # Playground
 P.append(g(60, 60, '<path d="M6 38L18 6h72l12 32" stroke="#404A87" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>'
   '<path d="M34 8v22M46 8v22M62 8v22M74 8v22" stroke="#8A5A2B" stroke-width="2"/>'
