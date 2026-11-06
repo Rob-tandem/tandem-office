@@ -7,8 +7,8 @@ import { Transcriber } from './transcribe';
 import { ChatPanel, type Audience } from './chat';
 
 const $ = <T extends HTMLElement>(s: string) => document.querySelector(s) as T;
-const myId = localStorage.getItem('office.id') ?? crypto.randomUUID();
-localStorage.setItem('office.id', myId);
+const myId = sessionStorage.getItem('office.id') ?? crypto.randomUUID();
+sessionStorage.setItem('office.id', myId);
 
 // ---------- entry screen ----------
 const coloursEl = $('#colours');
@@ -63,6 +63,7 @@ async function enter(name: string, passcode: string, color: string, wantTranscri
   });
 
   await net.join(passcode);
+  if (import.meta.env.DEV) (window as any).__office = { me, peers, mesh, net };
   await mesh.resume();
   $('#enter').classList.add('hidden'); $('#app').classList.remove('hidden');
   for (const m of await net.history()) if (visibleToMe(m)) chat.add(m);
@@ -153,7 +154,7 @@ async function enter(name: string, passcode: string, color: string, wantTranscri
     const away = now - lastInput > 5 * 60e3;
     me.status = away ? 'away' : z?.kind === 'room' ? 'meeting' : 'available';
     if (me.status !== lastStatus) { lastStatus = me.status; net.track(); }
-    if (now - lastPeopleRender > 1000) { lastPeopleRender = now; renderPeople(); }
+    if (now - lastPeopleRender > 1000) { lastPeopleRender = now; renderPeople(); mesh.tick(); }
     // draw
     const stage = canvas.parentElement!;
     const scale = Math.min(stage.clientWidth / (W * TILE), stage.clientHeight / (H * TILE), 1.25);

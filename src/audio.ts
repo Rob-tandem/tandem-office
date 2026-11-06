@@ -4,7 +4,7 @@
 
 const ICE = { iceServers: [{ urls: ['stun:stun.l.google.com:19302', 'stun:stun1.l.google.com:19302'] }] };
 
-interface Conn { pc: RTCPeerConnection; audio: HTMLAudioElement; makingOffer: boolean; ignoreOffer: boolean; analyser?: AnalyserNode; }
+interface Conn { pc: RTCPeerConnection; audio: HTMLAudioElement; makingOffer: boolean; ignoreOffer: boolean; analyser?: AnalyserNode; offerSince?: number; retries: number; }
 
 export class AudioMesh {
   private conns = new Map<string, Conn>();
@@ -56,13 +56,13 @@ export class AudioMesh {
     const pc = new RTCPeerConnection(ICE);
     const audio = document.createElement('audio'); audio.autoplay = true; audio.volume = this.volumes.get(id) ?? 1;
     document.body.appendChild(audio);
-    const c: Conn = { pc, audio, makingOffer: false, ignoreOffer: false };
+    const c: Conn = { pc, audio, makingOffer: false, ignoreOffer: false, retries: 0 };
     this.conns.set(id, c);
     if (this.stream) for (const t of this.stream.getAudioTracks()) pc.addTrack(t, this.stream);
     else pc.addTransceiver('audio', { direction: 'recvonly' });
     pc.onicecandidate = e => { if (e.candidate) this.send(id, { candidate: e.candidate }); };
     pc.onnegotiationneeded = async () => {
-      try { c.makingOffer = true; await pc.setLocalDescription(); this.send(id, { description: pc.localDescription }); }
+      try { c.makingOffer = true; await pc.setLocalDescription(); c.offerSince = performance.now(); c.retries = 0; this.send(id, { description: pc.localDescription }); }
       catch (e) { console.warn(e); } finally { c.makingOffer = false; }
     };
     pc.ontrack = e => {
@@ -100,6 +100,20 @@ export class AudioMesh {
 
   /** Call from a user gesture so autoplay is allowed. */
   async resume() { this.ctx ??= new AudioContext(); if (this.ctx.state === 'suspended') await this.ctx.resume(); for (const [, c] of this.conns) c.audio.play().catch(() => {}); }
+
+  /** Call about once a second. Signalling runs over Supabase broadcast, which can drop a message;
+   *  an offer that gets no answer within 2 s is sent again (up to 5 times). */
+  tick() {
+    const now = performance.now();
+    for (const [id, c] of this.conns) {
+      if (c.pc.signalingState === 'have-local-offer' && c.offerSince && now - c.offerSince > 2000 && c.retries < 5 && c.pc.localDescription) {
+        c.retries++; c.offerSince = now; this.send(id, { description: c.pc.localDescription });
+      }
+    }
+  }
+
+  /** Connection states, for debugging. */
+  states() { const o: Record<string, string> = {}; for (const [id, c] of this.conns) o[id] = `${c.pc.connectionState}/${c.pc.iceConnectionState}/${c.pc.signalingState}`; return o; }
 
   close() { for (const id of [...this.conns.keys()]) this.drop(id); this.stream?.getTracks().forEach(t => t.stop()); this.stream = null; }
 }

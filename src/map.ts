@@ -39,7 +39,7 @@ for (const y of [2, 4, 6, 8, 10]) for (const x of [3, 7, 11, 15, 19]) fill(x, y,
 // meeting tables
 fill(28, 2, 5, 2, 'T'); fill(28, 8, 5, 2, 'T');
 // kitchen
-fill(25, 13, 1, 4, 'K'); fill(30, 14, 2, 2, 'T'); fill(35, 15, 3, 1, 'S');
+fill(27, 14, 1, 3, 'K'); fill(30, 14, 2, 2, 'T'); fill(35, 15, 3, 1, 'S');
 // library
 fill(38 - 1, 19, 1, 4, 'B'); fill(26, 21, 3, 1, 'S');
 // garden plants
