@@ -72,6 +72,7 @@ export const FURN = {
   swings: [{ x: 2, y: 2 }, { x: 4, y: 2 }],
   beanbags: [{ x: 9, y: 6, c: '#F6BB47' }, { x: 11, y: 5, c: '#E5795E' }, { x: 33, y: 18, c: '#9BA0D9' }, { x: 36, y: 20, c: '#74B3E4' }, { x: 39, y: 18, c: '#F3A7C3' }, { x: 35, y: 22, c: '#63C6AC' }],
   bell: { x: 14, y: 23 },
+  lightSwitch: { x: 29, y: 22 },
 };
 // desks
 for (const d of DESKS) { fill(d.x + 1, d.y + 1, 2, 1, 'D'); grid[d.y + 2][d.x + 1] = 'C'; }
@@ -83,6 +84,7 @@ fill(FURN.slide.x, FURN.slide.y, FURN.slide.w, FURN.slide.h, 'L');
 for (const w of FURN.swings) grid[w.y][w.x] = 'W';
 for (const b of FURN.beanbags) grid[b.y][b.x] = 'G';
 grid[FURN.bell.y][FURN.bell.x] = 'B';
+grid[FURN.lightSwitch.y][FURN.lightSwitch.x] = 'V';
 
 export const SPAWN = { x: 14.5, y: 21.5 };
 

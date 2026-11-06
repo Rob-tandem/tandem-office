@@ -14,6 +14,8 @@ export const sounds = {
   pop() { tone(520, 0, 0.12, 'triangle', 0.08); },
   /** The lobby bell: everyone, come to the Rocket. */
   bell() { for (let i = 0; i < 3; i++) { tone(1320, i * 0.45, 0.8, 'sine', 0.15); tone(1980, i * 0.45, 0.4, 'sine', 0.05); } },
+  /** Light switch. */
+  click(on: boolean) { tone(on ? 1800 : 1200, 0, 0.05, 'square', 0.06); tone(on ? 2400 : 900, 0.06, 0.06, 'square', 0.05); },
   /** Swing bounce. */
   boing() { const c = ac(); const o = c.createOscillator(); const g = c.createGain(); o.type = 'sine'; o.connect(g); g.connect(c.destination);
     const t = c.currentTime; o.frequency.setValueAtTime(300, t); o.frequency.exponentialRampToValueAtTime(600, t + 0.15); g.gain.setValueAtTime(0.1, t); g.gain.exponentialRampToValueAtTime(0.001, t + 0.3); o.start(t); o.stop(t + 0.35); },

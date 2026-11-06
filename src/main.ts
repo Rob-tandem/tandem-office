@@ -50,6 +50,7 @@ $('#enter-form').addEventListener('submit', async e => {
 async function enter(name: string, passcode: string, color: string, wantTranscripts: boolean, home: string, mood: string) {
   const me: Peer = { id: myId, name, color, mood, home, x: SPAWN.x, y: SPAWN.y, status: 'available', muted: true, transcribing: false };
   const bounce = new Map<string, number>();
+  let lightsOn = true, light = 1, lastSwitch = 0;
   const inEarshot = new Set<string>();
   const peers = new Map<string, Peer>();
   let lastInput = performance.now();
@@ -85,6 +86,7 @@ async function enter(name: string, passcode: string, color: string, wantTranscri
     onSignal(from, _to, data) { mesh.onSignal(from, data); },
     onChat(m) { if (visibleToMe(m)) chat.add(m); },
     onBell(from) { sounds.bell(); toast(`🔔 ${from} rang the bell: everyone to the Rocket!`); },
+    onLights(on, by) { setLights(on, by, false); },
   });
   let joined = false;
 
@@ -97,6 +99,17 @@ async function enter(name: string, passcode: string, color: string, wantTranscri
   for (const m of await net.history()) if (visibleToMe(m)) chat.add(m);
   sendChat(`${name} entered the office`, 'everyone', null, 'system');
   sounds.chime();
+  // lights: first one in switches them on; otherwise take the state the others hold
+  setTimeout(() => {
+    if (peers.size === 0) { lightsOn = false; light = 0; setLights(true, name, true, true); }
+    else { const other = [...peers.values()].find(p => p.lights !== undefined); lightsOn = other ? other.lights !== false : true; light = lightsOn ? 1 : 0; me.lights = lightsOn; }
+  }, 700);
+  function setLights(on: boolean, by: string, broadcast: boolean, firstIn = false) {
+    if (on === lightsOn) return;
+    lightsOn = on; me.lights = on; sounds.click(on);
+    if (broadcast) { net.lights(on); net.track(); sendChat(`${by} turned the lights ${on ? 'on ☀️' : 'off 🌙'}${firstIn ? ' (first in)' : ''}`, 'everyone', null, 'system'); }
+    toast(by === name ? (firstIn ? "☀️ You're first in. Lights on!" : `💡 You turned the lights ${on ? 'on' : 'off'}`) : `💡 ${by} turned the lights ${on ? 'on' : 'off'}`);
+  }
   function toast(text: string) { const t = $('#toast'); t.textContent = text; t.classList.remove('hidden'); clearTimeout((toast as any).h); (toast as any).h = setTimeout(() => t.classList.add('hidden'), 4000); }
 
   // ----- helpers -----
@@ -158,7 +171,12 @@ async function enter(name: string, passcode: string, color: string, wantTranscri
   }
   camBtn.onclick = () => setCamera(!me.camera);
   txBtn.onclick = () => { wantTranscripts = !wantTranscripts; localStorage.setItem('office.transcribe', wantTranscripts ? 'on' : 'off'); applyTranscription(); net.track(); };
-  $('#leave').onclick = async () => { sendChat(`${name} left the office`, 'everyone', null, 'system'); await net.leave(); mesh.close(); transcriber.stop(); location.reload(); };
+  $('#leave').onclick = async () => {
+    const lastOut = peers.size === 0;
+    sendChat(`${name} left the office${lastOut ? ' and turned the lights off 🌙 (last out)' : ''}`, 'everyone', null, 'system');
+    if (lastOut) { lightsOn = false; sounds.click(false); toast('🌙 Last out. Lights off.'); await new Promise(r => setTimeout(r, 900)); }
+    await net.leave(); mesh.close(); transcriber.stop(); location.reload();
+  };
   window.addEventListener('beforeunload', () => { net.leave(); });
   applyTranscription();
 
@@ -198,6 +216,7 @@ async function enter(name: string, passcode: string, color: string, wantTranscri
     // fun tiles
     const tile = tileAt(me.x, me.y);
     if (tile === 'W' && now - (bounce.get(me.id) ?? 0) > 700) { bounce.set(me.id, now); sounds.boing(); }
+    if (tile === 'V' && now - lastSwitch > 1500) { lastSwitch = now; setLights(!lightsOn, name, true); }
     if (tile === 'B' && now - lastBell > 8000) { lastBell = now; net.bell(); sounds.bell(); toast('🔔 You rang the bell. Everyone to the Rocket!'); }
     // zone + status
     const z = zoneAt(me.x, me.y);
@@ -214,7 +233,8 @@ async function enter(name: string, passcode: string, color: string, wantTranscri
     const cw = Math.floor(W * TILE * scale), chh = Math.floor(H * TILE * scale);
     if (canvas.width !== cw * dpr || canvas.height !== chh * dpr) { canvas.width = cw * dpr; canvas.height = chh * dpr; canvas.style.width = cw + 'px'; canvas.style.height = chh + 'px'; }
     ctx.setTransform(dpr * scale, 0, 0, dpr * scale, 0, 0);
-    draw(ctx, me, [...peers.values()], speakingNow, now, bounce);
+    light += ((lightsOn ? 1 : 0) - light) * Math.min(1, dt * 3);
+    draw(ctx, me, [...peers.values()], speakingNow, now, bounce, light, lightsOn);
   }
   requestAnimationFrame(frame);
 }

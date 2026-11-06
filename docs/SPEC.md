@@ -29,6 +29,7 @@ Mobile is not in v1.
 | Rooms | Inside a meeting room you hear only people in that room, at full volume. Nobody outside hears in. |
 | Night Sky | Everyone in it is muted both ways. Good for heads-down work with "I am here" presence. |
 | Video (option 1) | Camera button, off by default. Your camera goes into the same peer mesh as audio at 320 x 240, 15 fps. A tile strip at the top of the map shows the people who can hear you; each tile fades with distance by the same rule as the volume, and disappears when they are out of earshot. A small self-preview shows while your camera is on. Fine for 3 to 5 people on camera at once; beyond that, move to LiveKit (section 7). |
+| Lights | The first person in turns the lights on (toast, click, a line in the log). The last person to press Leave turns them off. While the lights are off the floor is in night mode: a navy wash with warm lamp glows at each desk and the sign. A wall switch by the Night Sky door (step on it) toggles the lights for everyone, and says who did it. |
 | Fun touches | Door chime when someone enters. A soft pop when someone walks into earshot. Swings bounce you. Step on the bell on the Front Cover and everyone hears it with a "come to the Rocket" banner. |
 | Speaking | A ring lights up round an avatar while they talk. |
 | Status | Available, In a meeting (set when you are in a room), Away (no input for 5 minutes). |

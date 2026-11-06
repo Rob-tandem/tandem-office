@@ -74,9 +74,10 @@ function background(s: number): HTMLCanvasElement {
   bg = c; return c;
 }
 
-export function draw(ctx: Ctx, me: Peer, peers: Peer[], speaking: Set<string>, now: number, bounce: Map<string, number>) {
+export function draw(ctx: Ctx, me: Peer, peers: Peer[], speaking: Set<string>, now: number, bounce: Map<string, number>, light = 1, lightsOn = true) {
   const s = ctx.getTransform().a || 1;
   ctx.drawImage(background(s), 0, 0, W * TILE, H * TILE);
+  drawLights(ctx, light, lightsOn);
   const all = [me, ...peers];
   // desk signposts: white with grey text when free, the desk colour with white text when someone sits there
   for (const d of DESKS) {
@@ -89,6 +90,25 @@ export function draw(ctx: Ctx, me: Peer, peers: Peer[], speaking: Set<string>, n
     ctx.fillStyle = names.length ? '#fff' : MUTED; ctx.fillText(label, px + tw / 2, baseline(ctx, label, py, 18));
   }
   for (const p of [...peers, me]) drawAvatar(ctx, p, p === me, speaking.has(p.id), now, bounce.get(p.id) ?? 0);
+}
+
+/** Night mode: a navy wash over the floor, warm lamp glows at the desks and the sign, and the wall switch. */
+function drawLights(ctx: Ctx, light: number, lightsOn: boolean) {
+  const dark = 1 - light;
+  if (dark > 0.01) {
+    ctx.fillStyle = `rgba(27,30,59,${(0.78 * dark).toFixed(3)})`; ctx.fillRect(0, 0, T(W), T(H));
+    const glow = (x: number, y: number, r: number, a: number) => {
+      const g = ctx.createRadialGradient(x, y, 0, x, y, r); g.addColorStop(0, `rgba(246,187,71,${a})`); g.addColorStop(1, 'rgba(246,187,71,0)');
+      ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2); ctx.fill();
+    };
+    for (const d of DESKS) glow(T(d.x + 1.45), T(d.y + 1.45), 58, 0.55 * dark);
+    glow(T(14.5), T(21.5), 120, 0.35 * dark);
+    glow(T(FURN.bell.x + 0.5), T(FURN.bell.y + 0.5), 30, 0.5 * dark);
+  }
+  const sw = FURN.lightSwitch; const x = T(sw.x) + 6, y = T(sw.y) + 2;
+  shadow(ctx, 3, 10, 0.14); ctx.fillStyle = '#fff'; rr(ctx, x, y, 20, 28, 5); ctx.fill(); noShadow(ctx);
+  ctx.fillStyle = lightsOn ? '#F6BB47' : '#B8BCC9'; rr(ctx, x + 6, y + (lightsOn ? 5 : 13), 8, 10, 3); ctx.fill();
+  ctx.fillStyle = 'rgba(41,46,77,0.6)'; ctx.font = `700 9px ${FONT}`; ctx.textAlign = 'center'; ctx.textBaseline = 'top'; ctx.fillText('lights', x + 10, y + 30);
 }
 
 function drawAvatar(ctx: Ctx, p: Peer, isMe: boolean, talking: boolean, now: number, bounceT: number) {
