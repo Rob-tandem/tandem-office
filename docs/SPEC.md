@@ -1,6 +1,6 @@
 # Tandem Office: initial spec (v1, audio only)
 
-Status: v1 built 2026-11-06. Owner: Rob. Type: project. Registry row: "Tandem Office (virtual office)".
+Status: v1 built 2026-11-06; Storybook Land map and fun touches added the same day. Owner: Rob. Type: project. Registry row: "Tandem Office (virtual office)".
 
 ## 1. What it is
 
@@ -21,17 +21,18 @@ Mobile is not in v1.
 
 | Area | v1 behaviour |
 |---|---|
-| Entry | Name, pick a colour, a shared office passcode. Remembered on this browser. |
-| Map | One floor, 40 x 24 tiles. Zones: Lobby, Desks, two meeting rooms (Castle, Spaceship), Kitchen, Quiet Garden. |
+| Entry | Name, home nook, colour, mood emoji for the day, a shared office passcode. Remembered on this browser. Your name shows on the signpost of your home nook. |
+| Map | **Storybook Land**, 44 x 26 tiles, drawn with the 28 real app illustrations. Eight story nooks as desks (Castle, Spaceship, Dinosaur Valley, Farmyard, Magic Tree, Desert Island, Safari, Big Machines). Three themed meeting rooms: the Rocket (all-hands), the Treehouse (2 to 4), the Cave (1:1). The Playground (playroom, with swings, a slide and a sandpit), the Picnic (kitchen), the Night Sky (silent focus zone), and the Front Cover (lobby, under the Tandem wordmark). |
 | Movement | Arrow keys or WASD. Walls and furniture block you. Smooth 8 Hz position sync. |
 | Presence | Side list of who is online, their status and zone. Avatar = coloured disc with initials and a name label. |
 | Audio | Mic on/off button. You hear people within 5 tiles. Full volume at 2 tiles or closer, fading to silent at 5. |
 | Rooms | Inside a meeting room you hear only people in that room, at full volume. Nobody outside hears in. |
-| Quiet Garden | Everyone in it is muted both ways. Good for heads-down work with "I am here" presence. |
+| Night Sky | Everyone in it is muted both ways. Good for heads-down work with "I am here" presence. |
+| Fun touches | Door chime when someone enters. A soft pop when someone walks into earshot. Swings bounce you. Step on the bell on the Front Cover and everyone hears it with a "come to the Rocket" banner. |
 | Speaking | A ring lights up round an avatar while they talk. |
 | Status | Available, In a meeting (set when you are in a room), Away (no input for 5 minutes). |
 | Text | Chat panel with three audiences: Nearby (whoever can hear you right now), Everyone, and a direct message to one person. History for the last 24 hours loads when you enter. |
-| Transcripts | While your mic is on, your browser transcribes what you say (Web Speech API, Chrome and Edge). Each sentence is saved as a "said" line with who could hear it. A red dot on your avatar shows it is on. You can switch it off; the default is on. Not in the Quiet Garden. |
+| Transcripts | While your mic is on, your browser transcribes what you say (Web Speech API, Chrome and Edge). Each sentence is saved as a "said" line with who could hear it. A red dot on your avatar shows it is on. You can switch it off; the default is on. Not in the Night Sky. |
 | Vault capture | Every text message and transcript line is stored in Supabase (`office_messages`). A job on Rob's Mac exports each day to `co-owned/office/log/YYYY-MM-DD.md` in the shared TeamOS library, so nothing said in the office is lost. |
 | Branding | Tandem logotype, Wallop font, navy, cream and the card colours. No mascot redraw. |
 
@@ -60,7 +61,7 @@ integration, guest links.
 
 1. Same meeting room: full volume, regardless of distance.
 2. Either person in a meeting room and the other is not in that room: silent.
-3. Either person in the Quiet Garden: silent.
+3. Either person in the Night Sky: silent.
 4. Otherwise: distance in tiles `d`. Volume = 1 if `d <= 2`, 0 if `d >= 5`, linear in between.
 5. Mic off = your track is disabled; others see a muted icon on your avatar.
 
@@ -74,7 +75,7 @@ integration, guest links.
   library. It runs every 30 minutes on Rob's Mac (launchd). It rewrites the day's file, so it is
   safe to run again.
 - Team rule to agree: the office is a recorded space by default. Switch transcription off, or go
-  to the Quiet Garden, for anything you do not want in the vault.
+  to the Night Sky, for anything you do not want in the vault.
 
 ## 6c. Known limits of v1 (reviewed by Codex 2026-11-06)
 
@@ -82,7 +83,7 @@ integration, guest links.
   tables. Messages carry an office id derived from the passcode, so one passcode's history does
   not show in another, but anyone with the key and the REST URL can read rows. Fix in v2:
   Google sign-in limited to playtandem.com, and RLS by user.
-- Rooms, the Quiet Garden and direct messages are enforced in each person's browser, not by a
+- Rooms, the Night Sky and direct messages are enforced in each person's browser, not by a
   server. A modified client could hear or read more. Fine for a trusted team of ten; not for guests.
 - Names are the identity. Two people with the same name would get each other's direct messages.
 - Audio uses STUN only. On a network that blocks direct connections a person stays silent; the
@@ -96,7 +97,7 @@ integration, guest links.
 - Rooms show the next calendar meeting on their door (Outlook via tandem-graph).
 - "Knock": ping someone in the Quiet Garden.
 - Teams presence sync, so a Teams call shows as "in a meeting".
-- A proper tileset and furniture art.
+- Ambient sound per zone, a shared drawing wall in the Playground, snow in December.
 - A map editor, or at least a JSON map file people can edit.
 
 ## 8. Success test

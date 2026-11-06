@@ -13,17 +13,19 @@
   <div id="enter" class="enter">
     <div class="card">
       <img src="./tandem-logotype.png" alt="Tandem" class="logo">
-      <h1>The office</h1>
-      <p class="sub">Walk over to someone to talk. Rooms are private. The Quiet Garden is silent.</p>
+      <h1>Storybook Land</h1>
+      <p class="sub">Walk over to someone to talk. Rooms are private. The Night Sky is silent. Ring the bell to call everyone.</p>
       <form id="enter-form">
         <label>Your name<input id="name" required maxlength="32" autocomplete="name" placeholder="Rob"></label>
         <label>Office passcode<input id="passcode" required type="password" placeholder="ask the team"></label>
+        <label>Your home nook<select id="home"></select></label>
         <label>Colour<div id="colours" class="colours"></div></label>
+        <label>Mood today<div id="moods" class="moods"></div></label>
         <label class="check"><input id="transcribe" type="checkbox" checked> Transcribe what I say into the shared vault (default on)</label>
         <button id="enter-btn" type="submit">Enter the office</button>
         <p id="enter-err" class="err"></p>
       </form>
-      <p class="fine">Audio only for now. Chrome or Edge for transcripts. Arrow keys or WASD to move.</p>
+      <p class="fine">Audio only for now. Chrome or Edge for transcripts. Arrow keys or WASD to move. Transcripts go to the shared vault.</p>
     </div>
   </div>
 
@@ -43,7 +45,7 @@
         <ul id="people"></ul>
         <p class="fine">Click a name to message them directly.</p>
       </aside>
-      <div class="stage"><canvas id="c"></canvas></div>
+      <div class="stage"><canvas id="c"></canvas><div id="toast" class="toast hidden"></div></div>
       <aside class="chat" id="chat"></aside>
     </main>
   </div>

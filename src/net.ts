@@ -14,6 +14,7 @@ export interface NetEvents {
   onMove(id: string, x: number, y: number): void;
   onSignal(from: string, to: string, data: any): void;
   onChat(m: ChatMessage): void;
+  onBell(from: string): void;
 }
 
 const url = import.meta.env.VITE_SUPABASE_URL as string;
@@ -44,7 +45,8 @@ export class Net {
       })
       .on('broadcast', { event: 'pos' }, ({ payload }) => this.ev.onMove(payload.id, payload.x, payload.y))
       .on('broadcast', { event: 'rtc' }, ({ payload }) => { if (payload.to === this.me.id) this.ev.onSignal(payload.from, payload.to, payload.data); })
-      .on('broadcast', { event: 'chat' }, ({ payload }) => this.ev.onChat(payload as ChatMessage));
+      .on('broadcast', { event: 'chat' }, ({ payload }) => this.ev.onChat(payload as ChatMessage))
+      .on('broadcast', { event: 'bell' }, ({ payload }) => this.ev.onBell(String(payload.from ?? '')));
     await new Promise<void>((res, rej) => {
       this.ch.subscribe(async (status, err) => {
         if (status === 'SUBSCRIBED') { await this.track(); res(); }
@@ -55,8 +57,8 @@ export class Net {
 
   /** Re-send presence (identity, status, mute, current tile). */
   async track() {
-    const { id, name, color, x, y, status, muted, transcribing } = this.me;
-    await this.ch.track({ id, name, color, x: Math.round(x * 10) / 10, y: Math.round(y * 10) / 10, status, muted, transcribing });
+    const { id, name, color, mood, home, x, y, status, muted, transcribing } = this.me;
+    await this.ch.track({ id, name, color, mood, home, x: Math.round(x * 10) / 10, y: Math.round(y * 10) / 10, status, muted, transcribing });
   }
 
   /** Throttled to ~8 Hz. */
@@ -66,6 +68,8 @@ export class Net {
     this.lastSent = now;
     this.ch.send({ type: 'broadcast', event: 'pos', payload: { id: this.me.id, x: this.me.x, y: this.me.y } });
   }
+
+  bell() { this.ch.send({ type: 'broadcast', event: 'bell', payload: { from: this.me.name } }); }
 
   signal(to: string, data: any) {
     this.ch.send({ type: 'broadcast', event: 'rtc', payload: { from: this.me.id, to, data } });

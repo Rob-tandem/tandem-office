@@ -13,6 +13,12 @@ input:focus { outline: none; border-color: var(--navy); }
 .colours { display: flex; gap: 8px; margin-top: 6px; flex-wrap: wrap; }
 .colours button { width: 28px; height: 28px; border-radius: 50%; border: 3px solid transparent; cursor: pointer; }
 .colours button.on { border-color: var(--ink); }
+select { width: 100%; padding: 10px 12px; border: 2px solid #d9d4c5; border-radius: 10px; font: inherit; background: #fff; margin-top: 4px; }
+.moods { display: flex; gap: 4px; margin-top: 6px; flex-wrap: wrap; }
+.moods button { font-size: 20px; background: transparent; border: 2px solid transparent; border-radius: 8px; cursor: pointer; padding: 2px 4px; }
+.moods button.on { border-color: var(--navy); background: #fff; }
+.stage { position: relative; }
+.toast { position: absolute; top: 14px; left: 50%; transform: translateX(-50%); background: var(--yellow); color: var(--ink); font-weight: 700; padding: 8px 16px; border-radius: 999px; box-shadow: 0 6px 20px rgba(0,0,0,.25); }
 .check { display: flex; gap: 8px; align-items: center; font-weight: 400; margin-top: 14px; }
 button { font: inherit; }
 #enter-btn, .chat-form button { margin-top: 16px; width: 100%; padding: 12px; background: var(--navy); color: #fff; border: 0; border-radius: 12px; font-weight: 600; font-size: 16px; cursor: pointer; }
@@ -38,7 +44,7 @@ button { font: inherit; }
 .people .dot { width: 12px; height: 12px; border-radius: 50%; flex: none; }
 .people .where { opacity: .6; font-size: 11px; margin-left: auto; }
 .stage { display: grid; place-items: center; min-width: 0; min-height: 0; }
-canvas { max-width: 100%; max-height: 100%; border-radius: 8px; }
+canvas { max-width: 100%; max-height: 100%; border-radius: 12px; }
 .chat-tabs { display: flex; gap: 4px; }
 .chat-tabs button { flex: 1; border: 0; background: rgba(64,74,135,.12); border-radius: 8px; padding: 6px; font-weight: 600; cursor: pointer; font-size: 12px; }
 .chat-tabs button.on { background: var(--navy); color: #fff; }
