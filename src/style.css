@@ -48,6 +48,8 @@ canvas { max-width: 100%; max-height: 100%; border-radius: 8px; }
 .chat-list { flex: 1; overflow: auto; display: flex; flex-direction: column; gap: 6px; }
 .msg { background: #fff; border-radius: 10px; padding: 6px 10px; font-size: 13px; }
 .msg.me { background: #EEF0FA; }
+.msg.unsaved { opacity: .55; }
+.msg.unsaved .meta::after { content: ' · not saved to the vault'; color: #B83A57; }
 .msg.said { background: transparent; border: 1px dashed rgba(64,74,135,.3); opacity: .8; }
 .msg.direct { border-left: 4px solid var(--coral); }
 .msg.everyone { border-left: 4px solid var(--yellow); }

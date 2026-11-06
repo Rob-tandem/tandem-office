@@ -6,7 +6,7 @@ export interface ChatMessage {
   kind: 'text' | 'said' | 'system';
   sender: string; audience: 'nearby' | 'everyone' | 'direct';
   recipients: string[] | null;   // names; null = everyone
-  zone: string | null; body: string;
+  zone: string | null; body: string; office?: string;
 }
 
 export interface NetEvents {
@@ -28,10 +28,12 @@ async function channelName(passcode: string) {
 export class Net {
   private ch!: RealtimeChannel;
   private lastSent = 0;
+  office = '';
   constructor(private me: Peer, private ev: NetEvents) {}
 
   async join(passcode: string) {
     const name = await channelName(passcode);
+    this.office = name;
     this.ch = supabase.channel(name, { config: { presence: { key: this.me.id }, broadcast: { self: false } } });
     this.ch
       .on('presence', { event: 'sync' }, () => {
@@ -69,19 +71,21 @@ export class Net {
     this.ch.send({ type: 'broadcast', event: 'rtc', payload: { from: this.me.id, to, data } });
   }
 
-  async chat(m: ChatMessage) {
+  /** Broadcasts live, then stores. Resolves false if the row was not saved. */
+  async chat(m: ChatMessage): Promise<boolean> {
     this.ch.send({ type: 'broadcast', event: 'chat', payload: m });
     const { error } = await supabase.from('office_messages').insert({
-      kind: m.kind, sender: m.sender, audience: m.audience, recipients: m.recipients, zone: m.zone, body: m.body,
+      office: this.office, kind: m.kind, sender: m.sender, audience: m.audience, recipients: m.recipients, zone: m.zone, body: m.body,
     });
     if (error) console.warn('office_messages insert failed', error.message);
+    return !error;
   }
 
   async history(sinceHours = 24): Promise<ChatMessage[]> {
     const since = new Date(Date.now() - sinceHours * 3600e3).toISOString();
-    const { data, error } = await supabase.from('office_messages').select('*').gte('created_at', since).order('created_at', { ascending: true }).limit(500);
+    const { data, error } = await supabase.from('office_messages').select('*').eq('office', this.office).gte('created_at', since).order('created_at', { ascending: false }).limit(2000);
     if (error) { console.warn('history failed', error.message); return []; }
-    return (data ?? []) as ChatMessage[];
+    return ((data ?? []) as ChatMessage[]).reverse();
   }
 
   async leave() { try { await this.ch.untrack(); await supabase.removeChannel(this.ch); } catch {} }

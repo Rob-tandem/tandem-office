@@ -67,16 +67,30 @@ integration, guest links.
 ## 6b. Capture rules
 
 - Text messages: always stored, with audience (nearby names, everyone, or one name) and zone.
-- Transcripts: stored only while the speaker's mic is on and transcription is on. Browser-side
-  speech recognition, so no audio leaves the browser; only text does.
+- Transcripts: stored only while the speaker's mic is on and transcription is on. Chrome and Edge
+  send the audio to the browser vendor's speech service to make the text, so audio does leave the
+  browser while transcription is on. Nothing we run stores audio.
 - Export: `scripts/export-office-log.mjs` writes one markdown file per day into the shared
   library. It runs every 30 minutes on Rob's Mac (launchd). It rewrites the day's file, so it is
   safe to run again.
 - Team rule to agree: the office is a recorded space by default. Switch transcription off, or go
   to the Quiet Garden, for anything you do not want in the vault.
 
+## 6c. Known limits of v1 (reviewed by Codex 2026-11-06)
+
+- The message table is readable and writable with the publishable key, like the other cockpit
+  tables. Messages carry an office id derived from the passcode, so one passcode's history does
+  not show in another, but anyone with the key and the REST URL can read rows. Fix in v2:
+  Google sign-in limited to playtandem.com, and RLS by user.
+- Rooms, the Quiet Garden and direct messages are enforced in each person's browser, not by a
+  server. A modified client could hear or read more. Fine for a trusted team of ten; not for guests.
+- Names are the identity. Two people with the same name would get each other's direct messages.
+- Audio uses STUN only. On a network that blocks direct connections a person stays silent; the
+  fix is a TURN server (Cloudflare, free tier) behind a small edge function.
+
 ## 7. Later (v2 and beyond)
 
+- Google sign-in (playtandem.com only) and per-user RLS, so the vault is private to the team.
 - Video tiles when near someone (LiveKit).
 - Screen share inside a meeting room.
 - Rooms show the next calendar meeting on their door (Outlook via tandem-graph).

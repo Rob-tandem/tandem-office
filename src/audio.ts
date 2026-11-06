@@ -4,7 +4,7 @@
 
 const ICE = { iceServers: [{ urls: ['stun:stun.l.google.com:19302', 'stun:stun1.l.google.com:19302'] }] };
 
-interface Conn { pc: RTCPeerConnection; audio: HTMLAudioElement; makingOffer: boolean; ignoreOffer: boolean; analyser?: AnalyserNode; offerSince?: number; retries: number; }
+interface Conn { pc: RTCPeerConnection; audio: HTMLAudioElement; makingOffer: boolean; ignoreOffer: boolean; analyser?: AnalyserNode; offerSince?: number; retries: number; pending: RTCIceCandidateInit[]; }
 
 export class AudioMesh {
   private conns = new Map<string, Conn>();
@@ -56,7 +56,7 @@ export class AudioMesh {
     const pc = new RTCPeerConnection(ICE);
     const audio = document.createElement('audio'); audio.autoplay = true; audio.volume = this.volumes.get(id) ?? 1;
     document.body.appendChild(audio);
-    const c: Conn = { pc, audio, makingOffer: false, ignoreOffer: false, retries: 0 };
+    const c: Conn = { pc, audio, makingOffer: false, ignoreOffer: false, retries: 0, pending: [] };
     this.conns.set(id, c);
     if (this.stream) for (const t of this.stream.getAudioTracks()) pc.addTrack(t, this.stream);
     else pc.addTransceiver('audio', { direction: 'recvonly' });
@@ -91,8 +91,10 @@ export class AudioMesh {
         c.ignoreOffer = !polite && offerCollision;
         if (c.ignoreOffer) return;
         await pc.setRemoteDescription(data.description);
+        for (const cand of c.pending.splice(0)) { try { await pc.addIceCandidate(cand); } catch {} }
         if (data.description.type === 'offer') { await pc.setLocalDescription(); this.send(from, { description: pc.localDescription }); }
       } else if (data.candidate) {
+        if (!pc.remoteDescription) { c.pending.push(data.candidate); return; }
         try { await pc.addIceCandidate(data.candidate); } catch (e) { if (!c.ignoreOffer) throw e; }
       }
     } catch (e) { console.warn('signal error', e); }
@@ -106,7 +108,8 @@ export class AudioMesh {
   tick() {
     const now = performance.now();
     for (const [id, c] of this.conns) {
-      if (c.pc.signalingState === 'have-local-offer' && c.offerSince && now - c.offerSince > 2000 && c.retries < 5 && c.pc.localDescription) {
+      if (c.pc.signalingState === 'have-local-offer' && c.offerSince && now - c.offerSince > 2000 && c.pc.localDescription) {
+        if (c.retries >= 5) { this.drop(id); this.connect(id); continue; }   // start again from scratch
         c.retries++; c.offerSince = now; this.send(id, { description: c.pc.localDescription });
       }
     }

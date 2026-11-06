@@ -40,16 +40,17 @@ export class ChatPanel {
   setHint(t: string) { this.hint.textContent = t; }
   focus() { this.input.focus(); }
 
-  add(m: ChatMessage) {
+  add(m: ChatMessage): HTMLElement | null {
     const k = m.id ?? `${m.sender}|${m.body}|${m.created_at ?? ''}`;
-    if (m.id && this.seen.has(k)) return; if (m.id) this.seen.add(k);
+    if (m.id && this.seen.has(k)) return null; if (m.id) this.seen.add(k);
     const el = document.createElement('div');
     el.className = `msg ${m.kind} ${m.sender === this.myName ? 'me' : ''} ${m.audience}`;
     const when = m.created_at ? new Date(m.created_at) : new Date();
     const who = m.audience === 'direct' ? `${m.sender} → ${m.recipients?.[0] ?? ''}` : m.sender;
-    const scope = m.audience === 'everyone' ? ' · everyone' : m.audience === 'nearby' && m.zone ? ` · ${m.zone}` : '';
+    const scope = m.audience === 'everyone' ? ' · everyone' : m.audience === 'nearby' && m.zone ? ` · ${esc(m.zone)}` : '';
     el.innerHTML = `<span class="meta">${esc(who)}${scope} · ${when.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span><span class="body">${m.kind === 'said' ? '🎙 ' : ''}${esc(m.body)}</span>`;
     this.list.appendChild(el); this.list.scrollTop = this.list.scrollHeight;
+    return el;
   }
 }
 function esc(s: string) { return s.replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]!)); }

@@ -82,8 +82,8 @@ async function enter(name: string, passcode: string, color: string, wantTranscri
       kind, sender: name, audience, body, zone: z?.name ?? null,
       recipients: audience === 'everyone' ? null : audience === 'direct' ? [to!] : hearers().map(p => p.name),
     };
-    if (kind !== 'system') chat.add({ ...m, created_at: new Date().toISOString() });
-    net.chat(m);
+    const el = kind !== 'system' ? chat.add({ ...m, created_at: new Date().toISOString() }) : null;
+    net.chat(m).then(saved => { if (!saved) el?.classList.add('unsaved'); });
   }
   function renderPeople() {
     const ul = $('#people'); ul.innerHTML = '';
@@ -91,7 +91,10 @@ async function enter(name: string, passcode: string, color: string, wantTranscri
     for (const p of [me, ...peers.values()]) {
       const li = document.createElement('li');
       const z = zoneAt(p.x, p.y);
-      li.innerHTML = `<span class="dot" style="background:${p.color}"></span><span>${p.name}${p === me ? ' (you)' : ''}${p.muted ? ' 🔇' : ''}</span><span class="where">${p.status === 'away' ? 'away' : (z?.name ?? '')}</span>`;
+      const dot = document.createElement('span'); dot.className = 'dot'; dot.style.background = COLORS.includes(p.color) ? p.color : '#999';
+      const nm = document.createElement('span'); nm.textContent = `${p.name}${p === me ? ' (you)' : ''}${p.muted ? ' 🔇' : ''}`;
+      const wh = document.createElement('span'); wh.className = 'where'; wh.textContent = p.status === 'away' ? 'away' : (z?.name ?? '');
+      li.append(dot, nm, wh);
       if (p !== me) li.onclick = () => { chat.setAudience('direct', p.name); chat.focus(); };
       ul.appendChild(li);
     }
