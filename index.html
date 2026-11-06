@@ -17,7 +17,8 @@
       <p class="sub">Walk over to someone to talk. Rooms are private. The Night Sky is silent. Ring the bell to call everyone.</p>
       <form id="enter-form">
         <label>Your name<input id="name" required maxlength="32" autocomplete="name" placeholder="Rob"></label>
-        <label>Office passcode<input id="passcode" required type="password" placeholder="ask the team"></label>
+        <label id="passcode-label">Office passcode<input id="passcode" required type="password" placeholder="ask the team"></label>
+        <p id="passcode-ok" class="fine hidden">✓ Passcode filled in from your invite link.</p>
         <label>Your home nook<select id="home"></select></label>
         <label>Colour<div id="colours" class="colours"></div></label>
         <label>Mood today<div id="moods" class="moods"></div></label>
@@ -39,6 +40,7 @@
       <button id="mic" class="btn">🎙 Mic off</button>
       <button id="cam" class="btn">📷 Camera off</button>
       <button id="tx" class="btn">● Transcript on</button>
+      <button id="invite" class="btn ghost" title="Copy an invite link with the passcode in it">🔗 Invite</button>
       <button id="leave" class="btn ghost">Leave</button>
     </header>
     <main class="body">

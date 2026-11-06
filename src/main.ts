@@ -30,7 +30,12 @@ for (const m of MOODS) {
   moodsEl.appendChild(b);
 }
 ($('#name') as HTMLInputElement).value = localStorage.getItem('office.name') ?? '';
-($('#passcode') as HTMLInputElement).value = localStorage.getItem('office.passcode') ?? '';
+// Invite links carry the passcode in the URL fragment (never sent to a server): …/#itsgoodtotalk
+const fromLink = decodeURIComponent(location.hash.slice(1)).trim();
+if (fromLink) { localStorage.setItem('office.passcode', fromLink); history.replaceState(null, '', location.pathname + location.search); }
+($('#passcode') as HTMLInputElement).value = fromLink || (localStorage.getItem('office.passcode') ?? '');
+if (fromLink) { $('#passcode-label').classList.add('hidden'); $('#passcode-ok').classList.remove('hidden'); }
+export function inviteLink() { return location.origin + location.pathname + '#' + encodeURIComponent(localStorage.getItem('office.passcode') ?? ''); }
 ($('#transcribe') as HTMLInputElement).checked = localStorage.getItem('office.transcribe') !== 'off';
 
 $('#enter-form').addEventListener('submit', async e => {
@@ -174,6 +179,11 @@ async function enter(name: string, passcode: string, color: string, wantTranscri
     me.camera = on; camBtn.textContent = on ? '📷 Camera on' : '📷 Camera off'; camBtn.classList.toggle('live', on); net.track();
   }
   camBtn.onclick = () => setCamera(!me.camera);
+  $('#invite').onclick = async () => {
+    const link = inviteLink();
+    try { await navigator.clipboard.writeText(link); toast('🔗 Invite link copied. Anyone with it can walk in.'); }
+    catch { prompt('Copy this invite link:', link); }
+  };
   txBtn.onclick = () => { wantTranscripts = !wantTranscripts; localStorage.setItem('office.transcribe', wantTranscripts ? 'on' : 'off'); applyTranscription(); net.track(); };
   $('#leave').onclick = async () => {
     const lastOut = peers.size === 0;
