@@ -17,4 +17,4 @@ npm run dev
    launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.tandem.office-log.plist
    ```
    Writes `co-owned/office/log/YYYY-MM-DD.md` in the synced TeamOS library. Run by hand: `node scripts/export-office-log.mjs`.
-3. Deploy: `npm run build` then host `dist/` anywhere static (GitHub Pages workflow in `.github/workflows/pages.yml`).
+3. Deploy: every push to `main` deploys to https://rob-tandem.github.io/tandem-office/ via `.github/workflows/pages.yml`.
